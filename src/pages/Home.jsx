@@ -15,7 +15,7 @@ class Home extends React.Component {
         <header className="LunchMap-header">
           <img src={logo} className="LunchMap-logo" alt="logo" />
           <p>Welcome to lunch-map!</p>
-          <Link to="/foo">
+          <Link to="/map">
             <a
               className="LunchMap-link"
               href="https://reactjs.org"

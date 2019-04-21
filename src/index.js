@@ -4,7 +4,7 @@ import "./index.css";
 import { BrowserRouter, Route } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
 import "./LunchMap.css";
-import Foo from "./pages/Foo";
+import Map from "./pages/Map";
 import Home from "./pages/Home";
 
 class LunchMap extends React.Component {
@@ -13,7 +13,7 @@ class LunchMap extends React.Component {
       <BrowserRouter>
         <div>
           <Route exact path="/" component={Home} />
-          <Route path="/foo" component={Foo} />
+          <Route path="/map" component={Map} />
         </div>
       </BrowserRouter>
     );
