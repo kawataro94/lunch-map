@@ -1,17 +1,17 @@
 import React from "react";
 import "../LunchMap.css";
 import GoogleMapReact from "google-map-react";
-// import Marker from "../atoms/Marker";
+import Marker from "../atoms/Marker";
 
 const OurOffice = ({ text }) => <div>{text}</div>;
 
-class GoogleMap extends React.Component {
+class Map extends React.Component {
   static defaultProps = {
     center: {
-      lat: 33.585,
+      lat: 33.585284,
       lng: 130.392775
     },
-    zoom: 17
+    zoom: 18
   };
 
   constructor(props) {
@@ -41,14 +41,14 @@ class GoogleMap extends React.Component {
         >
           <OurOffice lat={33.585284} lng={130.392775} text="●Pear●" />
           {/* {places.map(place => ( */}
-          {/* <Marker
+          <Marker
             // key={place.id}
             // text={place.name}
             // lat={place.geometry.location.lat}
             // lng={place.geometry.location.lng}
             lat="33.584916"
             lng="130.391993"
-          /> */}
+          />
           {/* ))} */}
         </GoogleMapReact>
       </div>
@@ -56,4 +56,4 @@ class GoogleMap extends React.Component {
   }
 }
 
-export default GoogleMap;
+export default Map;
