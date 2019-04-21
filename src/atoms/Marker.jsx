@@ -11,28 +11,28 @@ const Wrapper = styled.div`
   background-color: red;
   border: 2px solid #fff;
   border-radius: 100%;
-  user-select: none;
+  /* user-select: none; */
   transform: translate(-50%, -50%);
-  cursor: ${props => (props.onClick ? "pointer" : "default")};
-  &:hover {
+  /* cursor: ${props => (props.onClick ? "pointer" : "default")}; */
+  /* &:hover {
     z-index: 1;
-  }
+  } */
 `;
 
 const Marker = props => (
   <Wrapper
-    alt={props.text}
-    {...(props.onClick ? { onClick: props.onClick } : {})}
+  // alt={props.text}
+  // {...(props.onClick ? { onClick: props.onClick } : {})}
   />
 );
 
-Marker.defaultProps = {
-  onClick: null
-};
+// Marker.defaultProps = {
+//   onClick: null
+// };
 
-Marker.propTypes = {
-  onClick: PropTypes.func,
-  text: PropTypes.string.isRequired
-};
+// Marker.propTypes = {
+//   onClick: PropTypes.func,
+//   text: PropTypes.string.isRequired
+// };
 
 export default Marker;

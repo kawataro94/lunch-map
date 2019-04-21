@@ -1,10 +1,17 @@
 import React from "react";
+import styled from "styled-components";
 import "../LunchMap.css";
 import GoogleMapReact from "google-map-react";
-import Marker from "../atoms/Marker";
+import ReactTooltip from "react-tooltip";
 
 const OurOffice = ({ text }) => <div>{text}</div>;
 
+const Pointer = styled.div`
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  background-color: red;
+`;
 class Map extends React.Component {
   static defaultProps = {
     center: {
@@ -31,27 +38,30 @@ class Map extends React.Component {
   render() {
     const { places } = this.state;
     return (
-      <div style={{ height: "100vh", width: "100%" }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{
-            key: "AIzaSyBaBZTLNvI_6C3eDd5d-XRKoX-LedbUnFU"
-          }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-        >
-          <OurOffice lat={33.585284} lng={130.392775} text="●Pear●" />
-          {/* {places.map(place => ( */}
-          <Marker
-            // key={place.id}
-            // text={place.name}
-            // lat={place.geometry.location.lat}
-            // lng={place.geometry.location.lng}
-            lat="33.584916"
-            lng="130.391993"
-          />
-          {/* ))} */}
-        </GoogleMapReact>
-      </div>
+      <>
+        <div style={{ height: "100vh", width: "100%" }}>
+          <GoogleMapReact
+            bootstrapURLKeys={{
+              key: "AIzaSyBaBZTLNvI_6C3eDd5d-XRKoX-LedbUnFU"
+            }}
+            defaultCenter={this.props.center}
+            defaultZoom={this.props.zoom}
+          >
+            <OurOffice lat={33.585284} lng={130.392775} text="●Pear●" />
+            {/* {places.map(place => ( */}
+            <Pointer
+              data-tip
+              data-for="store"
+              lat="33.584916"
+              lng="130.391993"
+            />
+            <ReactTooltip id="store" type="dark" effect="solid">
+              <span>storeName</span>
+            </ReactTooltip>
+            {/* ))} */}
+          </GoogleMapReact>
+        </div>
+      </>
     );
   }
 }
