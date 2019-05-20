@@ -41,6 +41,7 @@ class Map extends React.Component {
         querySnapshot.forEach(doc => {
           shopData.push({
             shopName: doc.data().name,
+            shopDetail: doc.data().shopDetail,
             lat: doc.data().lat,
             lng: doc.data().lng,
             id: doc.data().id
@@ -66,9 +67,11 @@ class Map extends React.Component {
           >
             <OurOffice lat={33.585284} lng={130.392775} text="●Pear●" />
             {places.map(place => {
+              console.log(place.shopDetail);
               return (
                 <Tooltip
                   shopName={place.shopName}
+                  shopDetail={place.shopDetail}
                   lat={place.lat}
                   lng={place.lng}
                   id={place.id}

@@ -89,6 +89,8 @@ const TextArea = styled.textarea`
   box-sizing: border-box;
   width: 500px;
   height: 350px;
+  padding: 10px;
+  font-size: 20px;
 `;
 
 const UpdateText = styled.input`
