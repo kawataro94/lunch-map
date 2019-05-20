@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import Modal from "react-modal";
 
 const Tip = styled.div`
   position: relative;
@@ -37,8 +38,25 @@ const Tip = styled.div`
   }
   :hover {
     z-index: 100;
+    cursor: pointer;
   }
 `;
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-20%",
+    transform: "translate(-50%, -50%)",
+    width: "500px",
+    height: "500px"
+  },
+  overlay: {
+    backgroundColor: "rgba(0,0,255,0.1)"
+  }
+};
 
 const ShopName = styled.div`
   margin: 0;
@@ -48,10 +66,48 @@ const ShopName = styled.div`
   color: #000;
 `;
 
-export default ({ shopName, lat, lng }) => {
+Modal.setAppElement("#root");
+
+export default ({ shopName, lat, lng, id }) => {
+  const [isModal, displayModal] = useState(false);
+
+  // this.closeModal = () => {
+  //   this.setState({
+  //     isModal: !boolean.isModal
+  //   });
+  // };
+
+  //失敗例
+  // const modalOpen = () => {
+  //   displayModal(!isModal);
+  //   console.log("open");
+  // };
+  // const modalClose = () => {
+  //   displayModal(!isModal);
+  //   console.log("close");
+  // };
+
+  const modalToggle = () => {
+    displayModal(!isModal);
+  };
+
+  const shopModal = id => {
+    console.log(id);
+    modalToggle();
+  };
+
   return (
-    <Tip lat={lat} lng={lng}>
-      <ShopName>{shopName}</ShopName>
-    </Tip>
+    <>
+      <Tip lat={lat} lng={lng} onClick={() => shopModal(id)}>
+        <ShopName>{shopName}</ShopName>
+      </Tip>
+      <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
+        <div onClick={() => modalToggle()}>close</div>
+        <div>{shopName}</div>
+        <form>
+          <input />
+        </form>
+      </Modal>
+    </>
   );
 };

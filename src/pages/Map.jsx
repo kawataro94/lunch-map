@@ -71,6 +71,7 @@ class Map extends React.Component {
                   shopName={place.shopName}
                   lat={place.lat}
                   lng={place.lng}
+                  id={place.id}
                   key={place.id}
                 />
               );
