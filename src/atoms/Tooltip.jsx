@@ -58,6 +58,12 @@ const customStyles = {
   }
 };
 
+const CloseButton = styled.div`
+  margin-top: 10px;
+  border-radius: 5px;
+  text-align: right;
+`;
+
 const ShopName = styled.div`
   margin: 0;
   padding: 0;
@@ -66,9 +72,33 @@ const ShopName = styled.div`
   color: #000;
 `;
 
+const ModalShopName = styled.h1`
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-weight: bold;
+  color: #000;
+`;
+
+const AboutShop = styled.h2`
+  margin: 5px 0;
+  font-size: 14px;
+`;
+
+const TextArea = styled.textarea`
+  box-sizing: border-box;
+  width: 500px;
+  height: 350px;
+`;
+
+const UpdateText = styled.input`
+  margin: 10px 0;
+  border-radius: 5px;
+`;
+
 Modal.setAppElement("#root");
 
-export default ({ shopName, lat, lng, id }) => {
+export default ({ shopName, shopDetail, lat, lng, id }) => {
   const [isModal, displayModal] = useState(false);
 
   // this.closeModal = () => {
@@ -102,10 +132,12 @@ export default ({ shopName, lat, lng, id }) => {
         <ShopName>{shopName}</ShopName>
       </Tip>
       <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
-        <div onClick={() => modalToggle()}>close</div>
-        <div>{shopName}</div>
+        <CloseButton onClick={() => modalToggle()}>close</CloseButton>
+        <ModalShopName>{shopName}</ModalShopName>
         <form>
-          <input />
+          <AboutShop>詳細について</AboutShop>
+          <TextArea>{shopDetail}</TextArea>
+          <UpdateText type="submit" value="登録する" />
         </form>
       </Modal>
     </>
