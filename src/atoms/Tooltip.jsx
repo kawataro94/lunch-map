@@ -100,6 +100,10 @@ const UpdateText = styled.input`
 
 Modal.setAppElement("#root");
 
+const handleChange = e => {
+  console.log(e.target.value);
+};
+
 export default ({ shopName, shopDetail, lat, lng, id }) => {
   const [isModal, displayModal] = useState(false);
 
@@ -138,7 +142,7 @@ export default ({ shopName, shopDetail, lat, lng, id }) => {
         <ModalShopName>{shopName}</ModalShopName>
         <form>
           <AboutShop>詳細について</AboutShop>
-          <TextArea>{shopDetail}</TextArea>
+          <TextArea onChange={handleChange} defaultValue={shopDetail} />
           <UpdateText type="submit" value="登録する" />
         </form>
       </Modal>
