@@ -29,22 +29,61 @@ class Map extends React.Component {
     super(props);
 
     this.state = {
-      places: []
+      places: [],
+      modalId: ""
+    };
+
+    this.setModalId = id => {
+      this.setState({
+        modalId: id
+      });
+    };
+
+    this.handleChange = e => {
+      // this.setState({
+      //   places: [{ ...this.state.places, shopDetail: e.target.value }]
+      // });
+
+      console.log(e.target.value);
+
+      // db.collection("shop")
+      //   .where(this.state.modalId)
+      //   .get()
+      //   .then(querySnapshot => {
+      //     console.log("hey");
+      //     console.log(querySnapshot);
+      //   });
+
+      db.collection("stores")
+        .doc(this.state.modalId)
+        .set({
+          shopName: this.state.places[this.state.modalId].shopName,
+          shopDetail: e.target.value,
+          lat: this.state.places[this.state.modalId].lat,
+          lng: this.state.places[this.state.modalId].lng
+        })
+        .then(function() {
+          console.log("Document successfully written!");
+        })
+        .catch(function(error) {
+          console.error("Error writing document: ", error);
+        });
     };
   }
 
   componentDidMount() {
-    db.collection("shops")
+    db.collection("stores")
       .get()
       .then(querySnapshot => {
         const shopData = [];
         querySnapshot.forEach(doc => {
+          console.log(doc.id);
           shopData.push({
-            shopName: doc.data().name,
+            shopName: doc.data().shopName,
             shopDetail: doc.data().shopDetail,
             lat: doc.data().lat,
             lng: doc.data().lng,
-            id: doc.data().id
+            id: doc.id
           });
         });
         this.setState({
@@ -55,6 +94,7 @@ class Map extends React.Component {
 
   render() {
     const { places } = this.state;
+    console.log(this.state.places);
     return (
       <>
         <div style={{ height: "100vh", width: "100%" }}>
@@ -67,7 +107,6 @@ class Map extends React.Component {
           >
             <OurOffice lat={33.585284} lng={130.392775} text="●Pear●" />
             {places.map(place => {
-              console.log(place.shopDetail);
               return (
                 <Tooltip
                   shopName={place.shopName}
@@ -76,6 +115,8 @@ class Map extends React.Component {
                   lng={place.lng}
                   id={place.id}
                   key={place.id}
+                  onChange={this.handleChange}
+                  setModalId={this.setModalId}
                 />
               );
             })}
