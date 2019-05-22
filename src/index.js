@@ -1,12 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import { BrowserRouter, Route } from "react-router-dom";
+import * as serviceWorker from "./serviceWorker";
+import "./LunchMap.css";
+import Map from "./pages/Map";
+import Home from "./pages/Home";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+class LunchMap extends React.Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <div>
+          <Route exact path="/" component={Home} />
+          <Route path="/map" component={Map} />
+        </div>
+      </BrowserRouter>
+    );
+  }
+}
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+ReactDOM.render(<LunchMap />, document.getElementById("root"));
+
 serviceWorker.unregister();
