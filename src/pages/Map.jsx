@@ -40,19 +40,9 @@ class Map extends React.Component {
     };
 
     this.handleChange = e => {
-      // this.setState({
-      //   places: [{ ...this.state.places, shopDetail: e.target.value }]
-      // });
-
-      console.log(e.target.value);
-
-      // db.collection("shop")
-      //   .where(this.state.modalId)
-      //   .get()
-      //   .then(querySnapshot => {
-      //     console.log("hey");
-      //     console.log(querySnapshot);
-      //   });
+      this.setState({
+        places: [{ ...this.state.places, shopDetail: e.target.value }]
+      });
 
       db.collection("stores")
         .doc(this.state.modalId)
