@@ -67,7 +67,6 @@ class Map extends React.Component {
       .then(querySnapshot => {
         const shopData = [];
         querySnapshot.forEach(doc => {
-          console.log(doc.id);
           shopData.push({
             shopName: doc.data().shopName,
             shopDetail: doc.data().shopDetail,
@@ -84,7 +83,6 @@ class Map extends React.Component {
 
   render() {
     const { places } = this.state;
-    console.log(this.state.places);
     return (
       <>
         <div style={{ height: "100vh", width: "100%" }}>
