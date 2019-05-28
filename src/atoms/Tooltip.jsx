@@ -110,23 +110,6 @@ export default ({
   onChange
 }) => {
   const [isModal, displayModal] = useState(false);
-
-  // this.closeModal = () => {
-  //   this.setState({
-  //     isModal: !boolean.isModal
-  //   });
-  // };
-
-  //失敗例
-  // const modalOpen = () => {
-  //   displayModal(!isModal);
-  //   console.log("open");
-  // };
-  // const modalClose = () => {
-  //   displayModal(!isModal);
-  //   console.log("close");
-  // };
-
   const modalToggle = () => {
     displayModal(!isModal);
   };
