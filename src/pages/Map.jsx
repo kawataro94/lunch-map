@@ -40,20 +40,14 @@ class Map extends React.Component {
     };
 
     this.handleChange = e => {
-      this.setState({
-        places: [{ ...this.state.places, shopDetail: e.target.value }]
-      });
-
       db.collection("stores")
         .doc(this.state.modalId)
         .set({
           shopName: this.state.places[this.state.modalId].shopName,
           shopDetail: e.target.value,
           lat: this.state.places[this.state.modalId].lat,
-          lng: this.state.places[this.state.modalId].lng
-        })
-        .then(function() {
-          console.log("Document successfully written!");
+          lng: this.state.places[this.state.modalId].lng,
+          id: this.state.places[this.state.modalId].id
         })
         .catch(function(error) {
           console.error("Error writing document: ", error);
