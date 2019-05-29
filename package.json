@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "firebase": "^6.0.2",
     "google-map-react": "^1.1.4",
     "react": "^16.8.6",
@@ -11,6 +12,11 @@
     "react-scripts": "2.1.8",
     "react-tooltip": "^3.10.0",
     "styled-components": "^4.2.0"
+=======
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "2.1.8"
+>>>>>>> 68fd4d009d3c21ef5327c47c67a123c5afe5b7ed
   },
   "scripts": {
     "start": "react-scripts start",
