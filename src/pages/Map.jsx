@@ -39,7 +39,22 @@ class Map extends React.Component {
       });
     };
 
-    this.handleChange = e => {
+    // this.handleChange = e => {
+    //   db.collection("stores")
+    //     .doc(this.state.modalId)
+    //     .set({
+    //       shopName: this.state.places[this.state.modalId].shopName,
+    //       shopDetail: e.target.value,
+    //       lat: this.state.places[this.state.modalId].lat,
+    //       lng: this.state.places[this.state.modalId].lng,
+    //       id: this.state.places[this.state.modalId].id
+    //     })
+    //     .catch(function(error) {
+    //       console.error("Error writing document: ", error);
+    //     });
+    // };
+
+    this.update = e => {
       db.collection("stores")
         .doc(this.state.modalId)
         .set({
@@ -52,6 +67,7 @@ class Map extends React.Component {
         .catch(function(error) {
           console.error("Error writing document: ", error);
         });
+      console.log(e);
     };
   }
 
@@ -99,6 +115,7 @@ class Map extends React.Component {
                   key={place.id}
                   onChange={this.handleChange}
                   setModalId={this.setModalId}
+                  update={this.update}
                 />
               );
             })}

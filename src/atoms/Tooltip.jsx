@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
+import Form from "./form";
 
 const Tip = styled.div`
   position: relative;
@@ -80,35 +81,9 @@ const ModalShopName = styled.h1`
   color: #000;
 `;
 
-const AboutShop = styled.h2`
-  margin: 5px 0;
-  font-size: 14px;
-`;
-
-const TextArea = styled.textarea`
-  box-sizing: border-box;
-  width: 500px;
-  height: 350px;
-  padding: 10px;
-  font-size: 20px;
-`;
-
-const UpdateText = styled.input`
-  margin: 10px 0;
-  border-radius: 5px;
-`;
-
 Modal.setAppElement("#root");
 
-export default ({
-  shopName,
-  shopDetail,
-  lat,
-  lng,
-  id,
-  setModalId,
-  onChange
-}) => {
+export default ({ shopName, shopDetail, lat, lng, id, setModalId, update }) => {
   const [isModal, displayModal] = useState(false);
 
   // this.closeModal = () => {
@@ -144,11 +119,7 @@ export default ({
       <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
         <CloseButton onClick={() => modalToggle()}>close</CloseButton>
         <ModalShopName>{shopName}</ModalShopName>
-        <form>
-          <AboutShop>詳細について</AboutShop>
-          <TextArea onChange={onChange} defaultValue={shopDetail} />
-          <UpdateText type="submit" value="登録する" />
-        </form>
+        <Form update={update} shopDetail={shopDetail} />
       </Modal>
     </>
   );
