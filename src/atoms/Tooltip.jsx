@@ -119,7 +119,7 @@ export default ({ shopName, shopDetail, lat, lng, id, setModalId, update }) => {
       <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
         <CloseButton onClick={() => modalToggle()}>close</CloseButton>
         <ModalShopName>{shopName}</ModalShopName>
-        <Form update={update} shopDetail={shopDetail} />
+        <Form update={update} shopDetail={shopDetail} id={id} />
       </Modal>
     </>
   );

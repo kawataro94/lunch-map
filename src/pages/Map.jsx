@@ -6,6 +6,9 @@ import "firebase/auth";
 import "firebase/firestore";
 
 import Tooltip from "../atoms/Tooltip";
+import ActionCreators from "../flux/actions/ActionCreator";
+import ShopStore from "../flux/stores/ShopStore";
+import { Container } from "flux/utils";
 
 const OurOffice = ({ text }) => <div>{text}</div>;
 
@@ -67,7 +70,17 @@ class Map extends React.Component {
         .catch(function(error) {
           console.error("Error writing document: ", error);
         });
-      console.log(e);
+    };
+  }
+
+  static getStores() {
+    return [ShopStore]; //利用したいReduceStore
+  }
+
+  static calculateState() {
+    return {
+      //container内で`this.state.KEY_NAME`でアクセス可能
+      Data: ShopStore.getState()
     };
   }
 
@@ -85,6 +98,7 @@ class Map extends React.Component {
             id: doc.id
           });
         });
+
         this.setState({
           places: shopData
         });
@@ -126,4 +140,4 @@ class Map extends React.Component {
   }
 }
 
-export default Map;
+export default Container.create(Map);

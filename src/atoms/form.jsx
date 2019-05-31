@@ -29,7 +29,7 @@ class Form extends React.Component {
 
   static calculateState() {
     return {
-      shopDetail: ShopStore.getState()
+      data: ShopStore.getState()
     };
   }
 
@@ -41,21 +41,26 @@ class Form extends React.Component {
   }
 
   handleChange = e => {
-    this.props.update(e);
     ActionCreator.change(e.target.value);
-    console.log(this.state.shopDetail);
+    this.props.update(e);
   };
 
-  render() {
-    console.log(this.state.places);
+  componentDidMount() {
+    console.log(this.props.shopDetail);
+    ActionCreator.postDetail(this.props.shopDetail);
+    ActionCreator.postId(this.props.id);
+    // console.log()
+  }
 
+  render() {
+    console.log(this.state.data.shopDetail);
     return (
       <>
         <form>
           <AboutShop>詳細について</AboutShop>
           <TextArea
             onChange={this.handleChange}
-            defaultValue={this.props.shopDetail}
+            defaultValue={this.state.data.shopDetail}
           />
           <UpdateText type="submit" value="登録する" />
         </form>

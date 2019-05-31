@@ -3,17 +3,24 @@ import { actions } from "../Constants";
 
 const ActionCreators = {
   //ActionCreators
-  change(shopDetail) {
-    const shop = {
-      text: shopDetail
-    };
 
+  postDetail(shopDetail) {
     flux.dispatch({
-      type: actions.CHANGE_DETAIL_MESSAGE,
-      data: shop.text
+      type: actions.POST_INITIAL_SHOPDETAIL,
+      data: shopDetail
     });
-    console.log("dispatch");
-    console.log(shop.text);
+  },
+  change(changeDetail) {
+    flux.dispatch({
+      type: actions.POST_CHANGE_SHOPDETAIL,
+      data: changeDetail
+    });
+  },
+  postId(id) {
+    flux.dispatch({
+      type: actions.POST_SHOPID,
+      data: id
+    });
   }
 };
 

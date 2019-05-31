@@ -5,33 +5,29 @@ import { actions } from "../Constants";
 class ShopStore extends ReduceStore {
   getInitialState() {
     return {
-      data: "initialState"
+      shopDetail: [],
+      shopId: []
     };
   }
 
   reduce(state, action) {
     switch (action.type) {
-      case actions.CHANGE_DETAIL_MESSAGE:
-        console.log("-------------");
-        console.log(state.data);
-        console.log(action.data);
-        console.log("-------------");
-        return action.data;
+      case actions.POST_INITIAL_SHOPDETAIL:
+        console.log("post_initial_shopdetail");
+        return { ...state, shopDetail: action.data };
+      case actions.POST_CHANGE_SHOPDETAIL:
+        console.log("post_change_shopdetail");
+        return { ...state, shopDetail: action.data };
+      case actions.POST_SHOPID:
+        console.log("post_shopid");
+        return { ...state, shopId: action.data };
+      // case actions.GET_SHOPDETAIL:
+      // console.log("get_shopDetail");
+      //   return { ...state, shopId: action.data };
       default:
-        //現在のstateをそのまま返す
         return state;
     }
   }
-
-  // reduce(state, action) {
-  //   switch (action.type) {
-  //     case actions.CHANGE_DETAIL_MESSAGE:
-  //       return state.concat(action.data);
-  //     default:
-  //       //現在のstateをそのまま返す
-  //       return state;
-  //   }
-  // }
 }
 
 export default new ShopStore(AppDispatchers);
