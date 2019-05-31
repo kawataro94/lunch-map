@@ -24,20 +24,19 @@ const UpdateText = styled.input`
 
 class Form extends React.Component {
   static getStores() {
-    return [ShopStore]; //利用したいReduceStore
+    return [ShopStore];
   }
 
   static calculateState() {
     return {
-      //container内で`this.state.KEY_NAME`でアクセス可能
-      value: ShopStore.getState()
+      shopDetail: ShopStore.getState()
     };
   }
 
   handleChange = e => {
     this.props.update(e);
     ActionCreator.change();
-    console.log(this.state.value);
+    console.log(this.state.shopDetail);
   };
 
   render() {
