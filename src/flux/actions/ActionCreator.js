@@ -4,15 +4,16 @@ import { actions } from "../Constants";
 const ActionCreators = {
   //ActionCreators
   change(shopDetail) {
-    const message = {
+    const shop = {
       text: shopDetail
     };
 
     flux.dispatch({
       type: actions.CHANGE_DETAIL_MESSAGE,
-      data: message.text
+      data: shop.text
     });
     console.log("dispatch");
+    console.log(shop.text);
   }
 };
 

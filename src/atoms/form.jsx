@@ -33,13 +33,22 @@ class Form extends React.Component {
     };
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      places: []
+    };
+  }
+
   handleChange = e => {
     this.props.update(e);
-    ActionCreator.change();
+    ActionCreator.change(e.target.value);
     console.log(this.state.shopDetail);
   };
 
   render() {
+    console.log(this.state.places);
+
     return (
       <>
         <form>
