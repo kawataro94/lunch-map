@@ -6,19 +6,20 @@ import "firebase/auth";
 import "firebase/firestore";
 
 import Tooltip from "../atoms/Tooltip";
-import ActionCreators from "../flux/actions/ActionCreator";
 import ShopStore from "../flux/stores/ShopStore";
 import { Container } from "flux/utils";
 
+import { updateShopData, getShopData } from "../shopData";
+
 const OurOffice = ({ text }) => <div>{text}</div>;
 
-firebase.initializeApp({
-  apiKey: "AIzaSyDGaGnMkdC7ldX2dGNiz6K_j4uLMl0WNIQ",
-  authDomain: "lunch-map-1555836368736.firebaseapp.com",
-  projectId: "lunch-map-1555836368736"
-});
+// firebase.initializeApp({
+//   apiKey: "AIzaSyDGaGnMkdC7ldX2dGNiz6K_j4uLMl0WNIQ",
+//   authDomain: "lunch-map-1555836368736.firebaseapp.com",
+//   projectId: "lunch-map-1555836368736"
+// });
 
-const db = firebase.firestore();
+// const db = firebase.firestore();
 class Map extends React.Component {
   static defaultProps = {
     center: {
@@ -44,60 +45,70 @@ class Map extends React.Component {
   }
 
   static getStores() {
-    return [ShopStore]; //利用したいReduceStore
+    return [ShopStore];
   }
 
   static calculateState() {
     return {
-      //container内で`this.state.KEY_NAME`でアクセス可能
       data: ShopStore.getState()
     };
   }
 
-  updateShopData = () => {
-    db.collection("stores")
-      .doc(this.state.data.shopId)
-      .set({
-        ...this.state.places[this.state.data.shopId],
-        shopDetail: this.state.data.shopDetail
-      })
-      .catch(function(error) {
-        console.error("Error writing document: ", error);
-      });
-  };
+  // updateShopData = () => {
+  //   db.collection("stores")
+  //     .doc(this.state.data.shopId)
+  //     .set({
+  //       ...this.state.places[this.state.data.shopId],
+  //       shopDetail: this.state.data.shopDetail
+  //     })
+  //     .catch(function(error) {
+  //       console.error("Error writing document: ", error);
+  //     });
+  // };
 
-  getShopData = () => {
-    db.collection("stores")
-      .get()
-      .then(querySnapshot => {
-        const shopData = [];
-        querySnapshot.forEach(doc => {
-          shopData.push({
-            shopName: doc.data().shopName,
-            shopDetail: doc.data().shopDetail,
-            lat: doc.data().lat,
-            lng: doc.data().lng,
-            id: doc.id
-          });
-        });
+  // getShopData = () => {
+  //   db.collection("stores")
+  //     .get()
+  //     .then(querySnapshot => {
+  //       const shopData = [];
+  //       querySnapshot.forEach(doc => {
+  //         shopData.push({
+  //           shopName: doc.data().shopName,
+  //           shopDetail: doc.data().shopDetail,
+  //           lat: doc.data().lat,
+  //           lng: doc.data().lng,
+  //           id: doc.id
+  //         });
+  //       });
 
-        this.setState({
-          places: shopData
-        });
+  //       this.setState({
+  //         places: shopData
+  //       });
+  //     });
+  // };
+
+  setShopData = () => {
+    getShopData().then(shopData => {
+      console.log(shopData);
+      this.setState({
+        places: shopData
       });
+    });
   };
 
   componentDidMount() {
-    this.getShopData();
+    this.setShopData();
   }
+
+  update = () => {
+    const { data, places } = this.state;
+    updateShopData(places, data);
+
+    this.setShopData();
+  };
 
   render() {
     const { places } = this.state;
-
-    this.update = () => {
-      this.updateShopData();
-      this.getShopData();
-    };
 
     return (
       <>
