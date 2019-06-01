@@ -79,18 +79,15 @@ class Map extends React.Component {
     const { places } = this.state;
 
     this.update = () => {
-      console.log(this.state.data.shopDetail);
-      console.log(this.state.data.shopId);
-
-      // db.collection("stores")
-      //   .doc(this.state.data.shopId)
-      //   .set({
-      //     ...this.state,
-      //     shopDetail: this.state.data.shopDetail
-      //   })
-      //   .catch(function(error) {
-      //     console.error("Error writing document: ", error);
-      //   });
+      db.collection("stores")
+        .doc(this.state.data.shopId)
+        .set({
+          ...this.state.places[this.state.data.shopId],
+          shopDetail: this.state.data.shopDetail
+        })
+        .catch(function(error) {
+          console.error("Error writing document: ", error);
+        });
     };
     return (
       <>
