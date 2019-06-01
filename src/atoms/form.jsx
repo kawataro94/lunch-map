@@ -46,11 +46,16 @@ class Form extends React.Component {
   };
 
   componentDidMount() {
-    ActionCreator.postDetail(this.props.shopDetail);
-    ActionCreator.postId(this.props.id);
+    const setData = async () => {
+      await ActionCreator.postDetail(this.props.shopDetail);
+      await ActionCreator.postId(this.props.id);
+    };
+
+    setData();
   }
 
   render() {
+    console.log(this.state.data);
     return (
       <>
         <form>

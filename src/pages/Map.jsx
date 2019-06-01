@@ -54,7 +54,19 @@ class Map extends React.Component {
     };
   }
 
-  componentDidMount() {
+  updateShopData = () => {
+    db.collection("stores")
+      .doc(this.state.data.shopId)
+      .set({
+        ...this.state.places[this.state.data.shopId],
+        shopDetail: this.state.data.shopDetail
+      })
+      .catch(function(error) {
+        console.error("Error writing document: ", error);
+      });
+  };
+
+  getShopData = () => {
     db.collection("stores")
       .get()
       .then(querySnapshot => {
@@ -73,22 +85,20 @@ class Map extends React.Component {
           places: shopData
         });
       });
+  };
+
+  componentDidMount() {
+    this.getShopData();
   }
 
   render() {
     const { places } = this.state;
 
     this.update = () => {
-      db.collection("stores")
-        .doc(this.state.data.shopId)
-        .set({
-          ...this.state.places[this.state.data.shopId],
-          shopDetail: this.state.data.shopDetail
-        })
-        .catch(function(error) {
-          console.error("Error writing document: ", error);
-        });
+      this.updateShopData();
+      this.getShopData();
     };
+
     return (
       <>
         <div style={{ height: "100vh", width: "100%" }}>
