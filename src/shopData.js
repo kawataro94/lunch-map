@@ -41,9 +41,5 @@ export const getShopData = () => {
       return shopData;
     });
 
-  // sample.then(res => {
-  //   console.log(res);
-  // });
-
   return sample;
 };

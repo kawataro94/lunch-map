@@ -13,13 +13,6 @@ import { updateShopData, getShopData } from "../shopData";
 
 const OurOffice = ({ text }) => <div>{text}</div>;
 
-// firebase.initializeApp({
-//   apiKey: "AIzaSyDGaGnMkdC7ldX2dGNiz6K_j4uLMl0WNIQ",
-//   authDomain: "lunch-map-1555836368736.firebaseapp.com",
-//   projectId: "lunch-map-1555836368736"
-// });
-
-// const db = firebase.firestore();
 class Map extends React.Component {
   static defaultProps = {
     center: {
@@ -53,39 +46,6 @@ class Map extends React.Component {
       data: ShopStore.getState()
     };
   }
-
-  // updateShopData = () => {
-  //   db.collection("stores")
-  //     .doc(this.state.data.shopId)
-  //     .set({
-  //       ...this.state.places[this.state.data.shopId],
-  //       shopDetail: this.state.data.shopDetail
-  //     })
-  //     .catch(function(error) {
-  //       console.error("Error writing document: ", error);
-  //     });
-  // };
-
-  // getShopData = () => {
-  //   db.collection("stores")
-  //     .get()
-  //     .then(querySnapshot => {
-  //       const shopData = [];
-  //       querySnapshot.forEach(doc => {
-  //         shopData.push({
-  //           shopName: doc.data().shopName,
-  //           shopDetail: doc.data().shopDetail,
-  //           lat: doc.data().lat,
-  //           lng: doc.data().lng,
-  //           id: doc.id
-  //         });
-  //       });
-
-  //       this.setState({
-  //         places: shopData
-  //       });
-  //     });
-  // };
 
   setShopData = () => {
     getShopData().then(shopData => {
