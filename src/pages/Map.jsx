@@ -1,18 +1,13 @@
 import React from "react";
 import "../LunchMap.css";
 import GoogleMapReact from "google-map-react";
-import * as firebase from "firebase";
-import "firebase/auth";
-import "firebase/firestore";
-
-import Tooltip from "../atoms/Tooltip";
 import ShopStore from "../flux/stores/ShopStore";
 import { Container } from "flux/utils";
-
 import { updateShopData, getShopData } from "../shopData";
 
-const OurOffice = ({ text }) => <div>{text}</div>;
+import Tooltip from "../atoms/Tooltip";
 
+const OurOffice = ({ text }) => <div>{text}</div>;
 class Map extends React.Component {
   static defaultProps = {
     center: {
@@ -26,7 +21,7 @@ class Map extends React.Component {
     super(props);
 
     this.state = {
-      places: [],
+      stores: [],
       modalId: ""
     };
 
@@ -43,15 +38,14 @@ class Map extends React.Component {
 
   static calculateState() {
     return {
-      data: ShopStore.getState()
+      updateData: ShopStore.getState()
     };
   }
 
   setShopData = () => {
     getShopData().then(shopData => {
-      console.log(shopData);
       this.setState({
-        places: shopData
+        stores: shopData
       });
     });
   };
@@ -61,14 +55,13 @@ class Map extends React.Component {
   }
 
   update = () => {
-    const { data, places } = this.state;
-    updateShopData(places, data);
-
+    const { updateData, stores } = this.state;
+    updateShopData(stores, updateData);
     this.setShopData();
   };
 
   render() {
-    const { places } = this.state;
+    const { stores } = this.state;
 
     return (
       <>
@@ -81,15 +74,13 @@ class Map extends React.Component {
             defaultZoom={this.props.zoom}
           >
             <OurOffice lat={33.585284} lng={130.392775} text="●Pear●" />
-            {places.map(place => {
+            {stores.map(store => {
               return (
                 <Tooltip
-                  shopName={place.shopName}
-                  shopDetail={place.shopDetail}
-                  lat={place.lat}
-                  lng={place.lng}
-                  id={place.id}
-                  key={place.id}
+                  lat={store.lat}
+                  lng={store.lng}
+                  store={store}
+                  key={store.id}
                   onChange={this.handleChange}
                   setModalId={this.setModalId}
                   update={this.update}

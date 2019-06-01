@@ -36,12 +36,12 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      places: []
+      stores: []
     };
   }
 
   handleChange = async e => {
-    await ActionCreator.change(e.target.value);
+    await ActionCreator.changeDetail(e.target.value);
     this.props.update(e);
   };
 
@@ -55,15 +55,12 @@ class Form extends React.Component {
   }
 
   render() {
-    console.log(this.state.data);
+    const { shopDetail } = this.state.data;
     return (
       <>
         <form>
           <AboutShop>詳細について</AboutShop>
-          <TextArea
-            onChange={this.handleChange}
-            defaultValue={this.state.data.shopDetail}
-          />
+          <TextArea onChange={this.handleChange} defaultValue={shopDetail} />
           <UpdateText type="submit" value="登録する" />
         </form>
       </>

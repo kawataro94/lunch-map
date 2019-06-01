@@ -84,7 +84,7 @@ const ModalShopName = styled.h1`
 
 Modal.setAppElement("#root");
 
-export default ({ shopName, shopDetail, lat, lng, id, setModalId, update }) => {
+export default ({ store, setModalId, update }) => {
   const [isModal, displayModal] = useState(false);
 
   const modalToggle = () => {
@@ -101,13 +101,13 @@ export default ({ shopName, shopDetail, lat, lng, id, setModalId, update }) => {
 
   return (
     <>
-      <Tip lat={lat} lng={lng} onClick={() => shopModal(id)}>
-        <ShopName>{shopName}</ShopName>
+      <Tip onClick={() => shopModal(store.id)}>
+        <ShopName>{store.shopName}</ShopName>
       </Tip>
       <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
         <CloseButton onClick={() => modalToggle()}>close</CloseButton>
-        <ModalShopName>{shopName}</ModalShopName>
-        <Form update={update} shopDetail={shopDetail} id={id} />
+        <ModalShopName>{store.shopName}</ModalShopName>
+        <Form update={update} shopDetail={store.shopDetail} id={store.id} />
       </Modal>
     </>
   );

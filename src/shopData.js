@@ -9,12 +9,11 @@ firebase.initializeApp({
 });
 const db = firebase.firestore();
 
-export const updateShopData = (places, updateData) => {
-  console.log(updateData);
+export const updateShopData = (stores, updateData) => {
   db.collection("stores")
     .doc(updateData.shopId)
     .set({
-      ...places[updateData.shopId],
+      ...stores[updateData.shopId],
       shopDetail: updateData.shopDetail
     })
     .catch(function(error) {
@@ -23,13 +22,13 @@ export const updateShopData = (places, updateData) => {
 };
 
 export const getShopData = () => {
-  const sample = db
+  const storeData = db
     .collection("stores")
     .get()
     .then(querySnapshot => {
-      const shopData = [];
+      const dataArray = [];
       querySnapshot.forEach(doc => {
-        shopData.push({
+        dataArray.push({
           shopName: doc.data().shopName,
           shopDetail: doc.data().shopDetail,
           lat: doc.data().lat,
@@ -38,8 +37,8 @@ export const getShopData = () => {
         });
       });
 
-      return shopData;
+      return dataArray;
     });
 
-  return sample;
+  return storeData;
 };
