@@ -89,7 +89,6 @@ export default ({ shopName, shopDetail, lat, lng, id, setModalId, update }) => {
 
   const modalToggle = () => {
     displayModal(!isModal);
-    console.log(isModal);
     if (isModal) {
       ActionCreator.resetShopId();
     }

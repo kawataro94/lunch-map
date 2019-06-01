@@ -19,7 +19,6 @@ class ShopStore extends ReduceStore {
       case actions.POST_SHOPID:
         return { ...state, shopId: action.data };
       case actions.RESET_SHOPID:
-        console.log("reset_shopid");
         return {
           shopDetail: [],
           shopId: []

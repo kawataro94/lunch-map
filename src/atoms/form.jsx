@@ -40,13 +40,12 @@ class Form extends React.Component {
     };
   }
 
-  handleChange = e => {
-    ActionCreator.change(e.target.value);
+  handleChange = async e => {
+    await ActionCreator.change(e.target.value);
     this.props.update(e);
   };
 
   componentDidMount() {
-    console.log(this.props.shopDetail);
     ActionCreator.postDetail(this.props.shopDetail);
     ActionCreator.postId(this.props.id);
   }

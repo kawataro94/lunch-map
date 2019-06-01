@@ -41,36 +41,6 @@ class Map extends React.Component {
         modalId: id
       });
     };
-
-    // this.handleChange = e => {
-    //   db.collection("stores")
-    //     .doc(this.state.modalId)
-    //     .set({
-    //       shopName: this.state.places[this.state.modalId].shopName,
-    //       shopDetail: e.target.value,
-    //       lat: this.state.places[this.state.modalId].lat,
-    //       lng: this.state.places[this.state.modalId].lng,
-    //       id: this.state.places[this.state.modalId].id
-    //     })
-    //     .catch(function(error) {
-    //       console.error("Error writing document: ", error);
-    //     });
-    // };
-
-    this.update = e => {
-      db.collection("stores")
-        .doc(this.state.modalId)
-        .set({
-          shopName: this.state.places[this.state.modalId].shopName,
-          shopDetail: e.target.value,
-          lat: this.state.places[this.state.modalId].lat,
-          lng: this.state.places[this.state.modalId].lng,
-          id: this.state.places[this.state.modalId].id
-        })
-        .catch(function(error) {
-          console.error("Error writing document: ", error);
-        });
-    };
   }
 
   static getStores() {
@@ -80,7 +50,7 @@ class Map extends React.Component {
   static calculateState() {
     return {
       //container内で`this.state.KEY_NAME`でアクセス可能
-      Data: ShopStore.getState()
+      data: ShopStore.getState()
     };
   }
 
@@ -107,6 +77,21 @@ class Map extends React.Component {
 
   render() {
     const { places } = this.state;
+
+    this.update = () => {
+      console.log(this.state.data.shopDetail);
+      console.log(this.state.data.shopId);
+
+      // db.collection("stores")
+      //   .doc(this.state.data.shopId)
+      //   .set({
+      //     ...this.state,
+      //     shopDetail: this.state.data.shopDetail
+      //   })
+      //   .catch(function(error) {
+      //     console.error("Error writing document: ", error);
+      //   });
+    };
     return (
       <>
         <div style={{ height: "100vh", width: "100%" }}>
