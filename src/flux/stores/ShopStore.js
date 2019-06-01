@@ -10,6 +10,9 @@ class ShopStore extends ReduceStore {
     };
   }
 
+  aaaaaaaaaaaa;
+
+  aaaaaaaaaaaaaaa;
   reduce(state, action) {
     switch (action.type) {
       case actions.POST_INITIAL_SHOPDETAIL:
