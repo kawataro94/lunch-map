@@ -1,21 +1,13 @@
 import React from "react";
 import "../LunchMap.css";
 import GoogleMapReact from "google-map-react";
-import * as firebase from "firebase";
-import "firebase/auth";
-import "firebase/firestore";
+import ShopStore from "../flux/stores/ShopStore";
+import { Container } from "flux/utils";
+import { updateShopData, getShopData } from "../shopData";
 
 import Tooltip from "../atoms/Tooltip";
 
 const OurOffice = ({ text }) => <div>{text}</div>;
-
-firebase.initializeApp({
-  apiKey: "AIzaSyDGaGnMkdC7ldX2dGNiz6K_j4uLMl0WNIQ",
-  authDomain: "lunch-map-1555836368736.firebaseapp.com",
-  projectId: "lunch-map-1555836368736"
-});
-
-const db = firebase.firestore();
 class Map extends React.Component {
   static defaultProps = {
     center: {
@@ -29,7 +21,7 @@ class Map extends React.Component {
     super(props);
 
     this.state = {
-      places: [],
+      stores: [],
       modalId: ""
     };
 
@@ -38,45 +30,39 @@ class Map extends React.Component {
         modalId: id
       });
     };
+  }
 
-    this.handleChange = e => {
-      db.collection("stores")
-        .doc(this.state.modalId)
-        .set({
-          shopName: this.state.places[this.state.modalId].shopName,
-          shopDetail: e.target.value,
-          lat: this.state.places[this.state.modalId].lat,
-          lng: this.state.places[this.state.modalId].lng,
-          id: this.state.places[this.state.modalId].id
-        })
-        .catch(function(error) {
-          console.error("Error writing document: ", error);
-        });
+  static getStores() {
+    return [ShopStore];
+  }
+
+  static calculateState() {
+    return {
+      updateData: ShopStore.getState()
     };
   }
 
-  componentDidMount() {
-    db.collection("stores")
-      .get()
-      .then(querySnapshot => {
-        const shopData = [];
-        querySnapshot.forEach(doc => {
-          shopData.push({
-            shopName: doc.data().shopName,
-            shopDetail: doc.data().shopDetail,
-            lat: doc.data().lat,
-            lng: doc.data().lng,
-            id: doc.id
-          });
-        });
-        this.setState({
-          places: shopData
-        });
+  setShopData = () => {
+    getShopData().then(shopData => {
+      this.setState({
+        stores: shopData
       });
+    });
+  };
+
+  componentDidMount() {
+    this.setShopData();
   }
 
+  update = () => {
+    const { updateData, stores } = this.state;
+    updateShopData(stores, updateData);
+    this.setShopData();
+  };
+
   render() {
-    const { places } = this.state;
+    const { stores } = this.state;
+
     return (
       <>
         <div style={{ height: "100vh", width: "100%" }}>
@@ -88,17 +74,16 @@ class Map extends React.Component {
             defaultZoom={this.props.zoom}
           >
             <OurOffice lat={33.585284} lng={130.392775} text="●Pear●" />
-            {places.map(place => {
+            {stores.map(store => {
               return (
                 <Tooltip
-                  shopName={place.shopName}
-                  shopDetail={place.shopDetail}
-                  lat={place.lat}
-                  lng={place.lng}
-                  id={place.id}
-                  key={place.id}
+                  lat={store.lat}
+                  lng={store.lng}
+                  store={store}
+                  key={store.id}
                   onChange={this.handleChange}
                   setModalId={this.setModalId}
+                  update={this.update}
                 />
               );
             })}
@@ -109,4 +94,4 @@ class Map extends React.Component {
   }
 }
 
-export default Map;
+export default Container.create(Map);

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
+import Form from "./form";
+import ActionCreator from "../flux/actions/ActionCreator";
 
 const Tip = styled.div`
   position: relative;
@@ -80,55 +82,16 @@ const ModalShopName = styled.h1`
   color: #000;
 `;
 
-const AboutShop = styled.h2`
-  margin: 5px 0;
-  font-size: 14px;
-`;
-
-const TextArea = styled.textarea`
-  box-sizing: border-box;
-  width: 500px;
-  height: 350px;
-  padding: 10px;
-  font-size: 20px;
-`;
-
-const UpdateText = styled.input`
-  margin: 10px 0;
-  border-radius: 5px;
-`;
-
 Modal.setAppElement("#root");
 
-export default ({
-  shopName,
-  shopDetail,
-  lat,
-  lng,
-  id,
-  setModalId,
-  onChange
-}) => {
+export default ({ store, setModalId, update }) => {
   const [isModal, displayModal] = useState(false);
-
-  // this.closeModal = () => {
-  //   this.setState({
-  //     isModal: !boolean.isModal
-  //   });
-  // };
-
-  //失敗例
-  // const modalOpen = () => {
-  //   displayModal(!isModal);
-  //   console.log("open");
-  // };
-  // const modalClose = () => {
-  //   displayModal(!isModal);
-  //   console.log("close");
-  // };
 
   const modalToggle = () => {
     displayModal(!isModal);
+    if (isModal) {
+      ActionCreator.resetShopId();
+    }
   };
 
   const shopModal = id => {
@@ -138,17 +101,13 @@ export default ({
 
   return (
     <>
-      <Tip lat={lat} lng={lng} onClick={() => shopModal(id)}>
-        <ShopName>{shopName}</ShopName>
+      <Tip onClick={() => shopModal(store.id)}>
+        <ShopName>{store.shopName}</ShopName>
       </Tip>
       <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
         <CloseButton onClick={() => modalToggle()}>close</CloseButton>
-        <ModalShopName>{shopName}</ModalShopName>
-        <form>
-          <AboutShop>詳細について</AboutShop>
-          <TextArea onChange={onChange} defaultValue={shopDetail} />
-          <UpdateText type="submit" value="登録する" />
-        </form>
+        <ModalShopName>{store.shopName}</ModalShopName>
+        <Form update={update} shopDetail={store.shopDetail} id={store.id} />
       </Modal>
     </>
   );
