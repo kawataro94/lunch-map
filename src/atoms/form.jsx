@@ -49,11 +49,9 @@ class Form extends React.Component {
     console.log(this.props.shopDetail);
     ActionCreator.postDetail(this.props.shopDetail);
     ActionCreator.postId(this.props.id);
-    // console.log()
   }
 
   render() {
-    console.log(this.state.data.shopDetail);
     return (
       <>
         <form>

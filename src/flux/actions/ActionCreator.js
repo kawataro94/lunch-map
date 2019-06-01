@@ -21,6 +21,11 @@ const ActionCreators = {
       type: actions.POST_SHOPID,
       data: id
     });
+  },
+  resetShopId() {
+    flux.dispatch({
+      type: actions.RESET_SHOPID
+    });
   }
 };
 

@@ -13,17 +13,17 @@ class ShopStore extends ReduceStore {
   reduce(state, action) {
     switch (action.type) {
       case actions.POST_INITIAL_SHOPDETAIL:
-        console.log("post_initial_shopdetail");
         return { ...state, shopDetail: action.data };
       case actions.POST_CHANGE_SHOPDETAIL:
-        console.log("post_change_shopdetail");
         return { ...state, shopDetail: action.data };
       case actions.POST_SHOPID:
-        console.log("post_shopid");
         return { ...state, shopId: action.data };
-      // case actions.GET_SHOPDETAIL:
-      // console.log("get_shopDetail");
-      //   return { ...state, shopId: action.data };
+      case actions.RESET_SHOPID:
+        console.log("reset_shopid");
+        return {
+          shopDetail: [],
+          shopId: []
+        };
       default:
         return state;
     }

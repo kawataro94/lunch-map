@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
 import Form from "./form";
+import ActionCreator from "../flux/actions/ActionCreator";
 
 const Tip = styled.div`
   position: relative;
@@ -86,24 +87,12 @@ Modal.setAppElement("#root");
 export default ({ shopName, shopDetail, lat, lng, id, setModalId, update }) => {
   const [isModal, displayModal] = useState(false);
 
-  // this.closeModal = () => {
-  //   this.setState({
-  //     isModal: !boolean.isModal
-  //   });
-  // };
-
-  //失敗例
-  // const modalOpen = () => {
-  //   displayModal(!isModal);
-  //   console.log("open");
-  // };
-  // const modalClose = () => {
-  //   displayModal(!isModal);
-  //   console.log("close");
-  // };
-
   const modalToggle = () => {
     displayModal(!isModal);
+    console.log(isModal);
+    if (isModal) {
+      ActionCreator.resetShopId();
+    }
   };
 
   const shopModal = id => {
