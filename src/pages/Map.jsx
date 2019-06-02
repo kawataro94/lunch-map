@@ -3,7 +3,7 @@ import "../LunchMap.css";
 import GoogleMapReact from "google-map-react";
 import ShopStore from "../flux/stores/ShopStore";
 import { Container } from "flux/utils";
-import { updateShopData, getShopData } from "../shopData";
+import { updateShopData, getShopData, _onClick } from "../shopData";
 
 import Tooltip from "../atoms/Tooltip";
 
@@ -72,6 +72,7 @@ class Map extends React.Component {
             }}
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
+            onClick={_onClick}
           >
             <OurOffice lat={33.585284} lng={130.392775} text="●Pear●" />
             {stores.map(store => {

@@ -42,3 +42,24 @@ export const getShopData = () => {
 
   return storeData;
 };
+
+export const _onClick = ({ lat, lng }) => {
+  console.log("click now");
+  console.log(lat, lng);
+
+  db.collection("stores")
+    .doc("2")
+    .set({
+      shopName: "sample",
+      shopDetail: "sampleの詳細",
+      lng: `${lng}`,
+      lat: `${lat}`,
+      id: "2"
+    })
+    .then(function() {
+      console.log("Document successfully written!");
+    })
+    .catch(function(error) {
+      console.error("Error writing document: ", error);
+    });
+};
