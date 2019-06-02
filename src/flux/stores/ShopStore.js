@@ -10,7 +10,7 @@ class ShopStore extends ReduceStore {
     };
   }
 
-  bbbbbbb;
+  test;
 
   aaaaaaaaaaaaaaa;
   reduce(state, action) {
