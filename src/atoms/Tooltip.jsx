@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
-import Form from "./form";
+import Form from "./Form";
 import ActionCreator from "../flux/actions/ActionCreator";
 
 const Tip = styled.div`
