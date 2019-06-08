@@ -1,20 +1,22 @@
-import React from "react";
-import "../LunchMap.css";
-import GoogleMapReact from "google-map-react";
-import ShopStore from "../flux/stores/ShopStore";
-import { Container } from "flux/utils";
-import { updateShopData, getShopData, _onClick } from "../shopData";
+import React from 'react';
+import '../LunchMap.css';
+import GoogleMapReact from 'google-map-react';
+import ShopStore from '../flux/stores/ShopStore';
+import {Container} from 'flux/utils';
+import {updateShopData, getShopData, _onClick} from '../shopData';
 
-import Tooltip from "../atoms/Tooltip";
+import Tooltip from '../atoms/Tooltip';
 
-const OurOffice = ({ text }) => <div>{text}</div>;
+import Fab from '@material-ui/core/Fab';
+
+const OurOffice = ({text}) => <div>{text}</div>;
 class Map extends React.Component {
   static defaultProps = {
     center: {
       lat: 33.585284,
-      lng: 130.392775
+      lng: 130.392775,
     },
-    zoom: 18
+    zoom: 18,
   };
 
   constructor(props) {
@@ -22,12 +24,12 @@ class Map extends React.Component {
 
     this.state = {
       stores: [],
-      modalId: ""
+      modalId: '',
     };
 
     this.setModalId = id => {
       this.setState({
-        modalId: id
+        modalId: id,
       });
     };
   }
@@ -38,14 +40,14 @@ class Map extends React.Component {
 
   static calculateState() {
     return {
-      updateData: ShopStore.getState()
+      updateData: ShopStore.getState(),
     };
   }
 
   setShopData = () => {
     getShopData().then(shopData => {
       this.setState({
-        stores: shopData
+        stores: shopData,
       });
     });
   };
@@ -55,20 +57,20 @@ class Map extends React.Component {
   }
 
   update = () => {
-    const { updateData, stores } = this.state;
+    const {updateData, stores} = this.state;
     updateShopData(stores, updateData);
     this.setShopData();
   };
 
   render() {
-    const { stores } = this.state;
+    const {stores} = this.state;
 
     return (
       <>
-        <div style={{ height: "100vh", width: "100%" }}>
+        <div style={{height: '100vh', width: '100%'}}>
           <GoogleMapReact
             bootstrapURLKeys={{
-              key: "AIzaSyBaBZTLNvI_6C3eDd5d-XRKoX-LedbUnFU"
+              key: 'AIzaSyBaBZTLNvI_6C3eDd5d-XRKoX-LedbUnFU',
             }}
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
@@ -88,6 +90,11 @@ class Map extends React.Component {
                 />
               );
             })}
+            <Fab color="primary" aria-label="Add" style={{zIndex: 99}}>
+              <i class="material-icons" style={{fontSize: 30}}>
+                add
+              </i>
+            </Fab>
           </GoogleMapReact>
         </div>
       </>
