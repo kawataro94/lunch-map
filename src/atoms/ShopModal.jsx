@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
 
@@ -22,12 +22,6 @@ const customStyles = {
   },
 };
 
-const CloseButton = styled.div`
-  margin-top: 10px;
-  border-radius: 5px;
-  text-align: right;
-`;
-
 export default ({store, update, isModal, displayModal}) => {
   const modalToggle = () => {
     console.log('false');
@@ -39,7 +33,7 @@ export default ({store, update, isModal, displayModal}) => {
   };
 
   const ModalShopName = styled.h1`
-    margin: 0;
+    margin: 0 0 30px 0;
     padding: 0;
     text-align: center;
     font-weight: bold;
@@ -48,8 +42,15 @@ export default ({store, update, isModal, displayModal}) => {
 
   return (
     <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
-      {console.log(isModal)}
-      <CloseButton onClick={() => modalToggle()}>close</CloseButton>
+      <div style={{marginBottom: '20px'}}>
+        <i
+          class="material-icons"
+          onClick={() => modalToggle()}
+          style={{cursor: 'pointer', float: 'right'}}
+        >
+          clear
+        </i>
+      </div>
       <ModalShopName>{store.shopName}</ModalShopName>
       <Form update={update} shopDetail={store.shopDetail} id={store.id} />
     </Modal>
