@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import Modal from "react-modal";
-import Form from "./form";
-import ActionCreator from "../flux/actions/ActionCreator";
+import React, {useState} from 'react';
+import styled from 'styled-components';
+import Modal from 'react-modal';
+import Form from './Form';
+import ShopModal from './ShopModal';
+import ActionCreator from '../flux/actions/ActionCreator';
 
 const Tip = styled.div`
   position: relative;
@@ -19,7 +20,7 @@ const Tip = styled.div`
   border-radius: 5px;
   box-sizing: border-box;
   :before {
-    content: "";
+    content: '';
     position: absolute;
     bottom: -24px;
     left: 50%;
@@ -29,7 +30,7 @@ const Tip = styled.div`
     z-index: 2;
   }
   :after {
-    content: "";
+    content: '';
     position: absolute;
     bottom: -29px;
     left: 50%;
@@ -46,18 +47,18 @@ const Tip = styled.div`
 
 const customStyles = {
   content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-20%",
-    transform: "translate(-50%, -50%)",
-    width: "500px",
-    height: "500px"
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-20%',
+    transform: 'translate(-50%, -50%)',
+    width: '500px',
+    height: '500px',
   },
   overlay: {
-    backgroundColor: "rgba(0,0,255,0.1)"
-  }
+    backgroundColor: 'rgba(0,0,255,0.1)',
+  },
 };
 
 const CloseButton = styled.div`
@@ -82,9 +83,9 @@ const ModalShopName = styled.h1`
   color: #000;
 `;
 
-Modal.setAppElement("#root");
+Modal.setAppElement('#root');
 
-export default ({ store, setModalId, update }) => {
+export default ({store, setModalId, update}) => {
   const [isModal, displayModal] = useState(false);
 
   const modalToggle = () => {
@@ -104,11 +105,17 @@ export default ({ store, setModalId, update }) => {
       <Tip onClick={() => shopModal(store.id)}>
         <ShopName>{store.shopName}</ShopName>
       </Tip>
-      <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
+      {/* <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
         <CloseButton onClick={() => modalToggle()}>close</CloseButton>
         <ModalShopName>{store.shopName}</ModalShopName>
         <Form update={update} shopDetail={store.shopDetail} id={store.id} />
-      </Modal>
+      </Modal> */}
+      <ShopModal
+        store={store}
+        update={update}
+        isModal={isModal}
+        displayModal={displayModal}
+      />
     </>
   );
 };
