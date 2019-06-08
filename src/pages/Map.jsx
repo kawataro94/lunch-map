@@ -1,11 +1,12 @@
 import React from "react";
 import "../LunchMap.css";
 import GoogleMapReact from "google-map-react";
-import ShopStore from "../flux/stores/ShopStore";
-import { Container } from "flux/utils";
 import { updateShopData, getShopData, _onClick } from "../shopData";
 
 import Tooltip from "../atoms/Tooltip";
+
+import Fab from "@material-ui/core/Fab";
+import AddShopModal from "../atoms/AddShopModal";
 
 const OurOffice = ({ text }) => <div>{text}</div>;
 class Map extends React.Component {
@@ -22,23 +23,14 @@ class Map extends React.Component {
 
     this.state = {
       stores: [],
-      modalId: ""
+      modalId: "",
+      isAddModal: false
     };
 
     this.setModalId = id => {
       this.setState({
         modalId: id
       });
-    };
-  }
-
-  static getStores() {
-    return [ShopStore];
-  }
-
-  static calculateState() {
-    return {
-      updateData: ShopStore.getState()
     };
   }
 
@@ -60,12 +52,39 @@ class Map extends React.Component {
     this.setShopData();
   };
 
-  render() {
-    const { stores } = this.state;
+  // AddModal
+  modalToggle = () => {
+    const { isAddModal } = this.state;
+    this.setState({ isAddModal: !isAddModal });
+    if (this.state.isAddModal) {
+      // ActionCreator.resetShopId();
+    }
+  };
 
+  shopModal = () => {
+    this.modalToggle();
+    // setModalId(id);
+  };
+
+  render() {
+    const { stores, isAddModal } = this.state;
+    // const normal = true;
+    const addMap = false;
     return (
       <>
-        <div style={{ height: "100vh", width: "100%" }}>
+        <div style={{ height: "100vh", width: "100%", position: "relative" }}>
+          <div style={{ position: "absolute", bottom: "50px", right: "90px" }}>
+            <Fab
+              color="primary"
+              aria-label="Add"
+              style={{ zIndex: 99 }}
+              onClick={() => this.shopModal()}
+            >
+              <i className="material-icons" style={{ fontSize: 30 }}>
+                add
+              </i>
+            </Fab>
+          </div>
           <GoogleMapReact
             bootstrapURLKeys={{
               key: "AIzaSyBaBZTLNvI_6C3eDd5d-XRKoX-LedbUnFU"
@@ -88,6 +107,13 @@ class Map extends React.Component {
                 />
               );
             })}
+            <AddShopModal isModal={isAddModal} modalToggle={this.modalToggle} />
+            {addMap && (
+              <div>
+                <h1>成功です</h1>
+                <h2>成功です</h2>
+              </div>
+            )}
           </GoogleMapReact>
         </div>
       </>
@@ -95,4 +121,4 @@ class Map extends React.Component {
   }
 }
 
-export default Container.create(Map);
+export default Map;

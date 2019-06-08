@@ -15,6 +15,7 @@ const TextArea = styled.textarea`
   height: 350px;
   padding: 10px;
   font-size: 20px;
+  border: 1px solid rgb(0, 0, 0);
 `;
 
 const UpdateText = styled.input`

@@ -24,6 +24,12 @@ const ActionCreators = {
     flux.dispatch({
       type: actions.RESET_SHOPID
     });
+  },
+  addShop(shopName, shopDetail) {
+    flux.dispatch({
+      type: actions.POST_NEWSHOP,
+      data: { name: shopName, detail: shopDetail }
+    });
   }
 };
 
