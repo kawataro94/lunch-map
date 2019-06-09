@@ -8,6 +8,7 @@ import {updateShopData, getShopData, _onClick} from '../shopData';
 import Tooltip from '../atoms/Tooltip';
 
 import Fab from '@material-ui/core/Fab';
+// import AddShopModal from '../atoms/AddShopModal';
 
 const OurOffice = ({text}) => <div>{text}</div>;
 class Map extends React.Component {
@@ -25,6 +26,7 @@ class Map extends React.Component {
     this.state = {
       stores: [],
       modalId: '',
+      isAddModal: false,
     };
 
     this.setModalId = id => {
@@ -62,9 +64,24 @@ class Map extends React.Component {
     this.setShopData();
   };
 
+  // AddModal
+  modalToggle = () => {
+    const {isAddModal} = this.state;
+    this.setState({isAddModal: !isAddModal});
+    if (this.state.isAddModal) {
+      // ActionCreator.resetShopId();
+    }
+  };
+
+  shopModal = () => {
+    this.modalToggle();
+    // setModalId(id);
+  };
+
   render() {
     const {stores} = this.state;
-
+    // const normal = true;
+    // const addMap = false;
     return (
       <>
         <div style={{height: '100vh', width: '100%'}}>
@@ -90,11 +107,24 @@ class Map extends React.Component {
                 />
               );
             })}
-            <Fab color="primary" aria-label="Add" style={{zIndex: 99}}>
+            <Fab
+              color="primary"
+              aria-label="Add"
+              style={{zIndex: 99}}
+              onClick={() => this.shopModal()}
+            >
               <i class="material-icons" style={{fontSize: 30}}>
                 add
               </i>
             </Fab>
+
+            {/* <AddShopModal isModal={isAddModal} modalToggle={this.modalToggle} />
+            {addMap && (
+              <div>
+                <h1>成功です</h1>
+                <h2>成功です</h2>
+              </div>
+            )} */}
           </GoogleMapReact>
         </div>
       </>

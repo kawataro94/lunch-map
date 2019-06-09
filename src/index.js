@@ -1,11 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import { BrowserRouter, Route } from "react-router-dom";
-import * as serviceWorker from "./serviceWorker";
-import "./LunchMap.css";
-import Map from "./pages/Map";
-import Home from "./pages/Home";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import {BrowserRouter, Route} from 'react-router-dom';
+import * as serviceWorker from './serviceWorker';
+import './LunchMap.css';
+import Map from './pages/Map';
+import Home from './pages/Home';
 
 class LunchMap extends React.Component {
   render() {
@@ -20,6 +20,6 @@ class LunchMap extends React.Component {
   }
 }
 
-ReactDOM.render(<LunchMap />, document.getElementById("root"));
+ReactDOM.render(<LunchMap />, document.getElementById('root'));
 
 serviceWorker.unregister();

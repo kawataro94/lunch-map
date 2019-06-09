@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import logo from "../logo.svg";
-import "../LunchMap.css";
-import { Link } from "react-router-dom";
+import React from 'react';
+import styled from 'styled-components';
+import logo from '../logo.svg';
+import '../LunchMap.css';
+import {Link} from 'react-router-dom';
 
 const Wrap = styled.div`
   color: black;

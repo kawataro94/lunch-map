@@ -1,10 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
 import Modal from 'react-modal';
-
-import Form from './Form';
-
-import ActionCreator from '../flux/actions/ActionCreator';
 
 const customStyles = {
   content: {
@@ -22,22 +17,7 @@ const customStyles = {
   },
 };
 
-export default ({store, update, isModal, displayModal}) => {
-  const modalToggle = () => {
-    displayModal(!isModal);
-    if (isModal) {
-      ActionCreator.resetShopId();
-    }
-  };
-
-  const ModalShopName = styled.h1`
-    margin: 0 0 30px 0;
-    padding: 0;
-    text-align: center;
-    font-weight: bold;
-    color: #000;
-  `;
-
+export default ({isModal, modalToggle}) => {
   return (
     <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
       <div style={{marginBottom: '20px'}}>
@@ -49,8 +29,7 @@ export default ({store, update, isModal, displayModal}) => {
           clear
         </i>
       </div>
-      <ModalShopName>{store.shopName}</ModalShopName>
-      <Form update={update} shopDetail={store.shopDetail} id={store.id} />
+      Modal
     </Modal>
   );
 };
