@@ -1,23 +1,23 @@
-import React from 'react';
-import '../LunchMap.css';
-import GoogleMapReact from 'google-map-react';
-import ShopStore from '../flux/stores/ShopStore';
-import {Container} from 'flux/utils';
-import {updateShopData, getShopData, _onClick} from '../shopData';
+import React from "react";
+import "../LunchMap.css";
+import GoogleMapReact from "google-map-react";
+import ShopStore from "../flux/stores/ShopStore";
+import { Container } from "flux/utils";
+import { updateShopData, getShopData, _onClick } from "../shopData";
 
-import Tooltip from '../atoms/Tooltip';
+import Tooltip from "../atoms/Tooltip";
 
-import Fab from '@material-ui/core/Fab';
-// import AddShopModal from '../atoms/AddShopModal';
+import Fab from "@material-ui/core/Fab";
+import AddShopModal from "../atoms/AddShopModal";
 
-const OurOffice = ({text}) => <div>{text}</div>;
+const OurOffice = ({ text }) => <div>{text}</div>;
 class Map extends React.Component {
   static defaultProps = {
     center: {
       lat: 33.585284,
-      lng: 130.392775,
+      lng: 130.392775
     },
-    zoom: 18,
+    zoom: 18
   };
 
   constructor(props) {
@@ -25,13 +25,13 @@ class Map extends React.Component {
 
     this.state = {
       stores: [],
-      modalId: '',
-      isAddModal: false,
+      modalId: "",
+      isAddModal: false
     };
 
     this.setModalId = id => {
       this.setState({
-        modalId: id,
+        modalId: id
       });
     };
   }
@@ -42,14 +42,14 @@ class Map extends React.Component {
 
   static calculateState() {
     return {
-      updateData: ShopStore.getState(),
+      updateData: ShopStore.getState()
     };
   }
 
   setShopData = () => {
     getShopData().then(shopData => {
       this.setState({
-        stores: shopData,
+        stores: shopData
       });
     });
   };
@@ -59,15 +59,15 @@ class Map extends React.Component {
   }
 
   update = () => {
-    const {updateData, stores} = this.state;
+    const { updateData, stores } = this.state;
     updateShopData(stores, updateData);
     this.setShopData();
   };
 
   // AddModal
   modalToggle = () => {
-    const {isAddModal} = this.state;
-    this.setState({isAddModal: !isAddModal});
+    const { isAddModal } = this.state;
+    this.setState({ isAddModal: !isAddModal });
     if (this.state.isAddModal) {
       // ActionCreator.resetShopId();
     }
@@ -79,15 +79,15 @@ class Map extends React.Component {
   };
 
   render() {
-    const {stores} = this.state;
+    const { stores, isAddModal } = this.state;
     // const normal = true;
-    // const addMap = false;
+    const addMap = false;
     return (
       <>
-        <div style={{height: '100vh', width: '100%'}}>
+        <div style={{ height: "100vh", width: "100%" }}>
           <GoogleMapReact
             bootstrapURLKeys={{
-              key: 'AIzaSyBaBZTLNvI_6C3eDd5d-XRKoX-LedbUnFU',
+              key: "AIzaSyBaBZTLNvI_6C3eDd5d-XRKoX-LedbUnFU"
             }}
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
@@ -110,21 +110,21 @@ class Map extends React.Component {
             <Fab
               color="primary"
               aria-label="Add"
-              style={{zIndex: 99}}
+              style={{ zIndex: 99 }}
               onClick={() => this.shopModal()}
             >
-              <i class="material-icons" style={{fontSize: 30}}>
+              <i class="material-icons" style={{ fontSize: 30 }}>
                 add
               </i>
             </Fab>
 
-            {/* <AddShopModal isModal={isAddModal} modalToggle={this.modalToggle} />
+            <AddShopModal isModal={isAddModal} modalToggle={this.modalToggle} />
             {addMap && (
               <div>
                 <h1>成功です</h1>
                 <h2>成功です</h2>
               </div>
-            )} */}
+            )}
           </GoogleMapReact>
         </div>
       </>
