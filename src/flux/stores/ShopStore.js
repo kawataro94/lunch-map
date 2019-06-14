@@ -6,7 +6,8 @@ class ShopStore extends ReduceStore {
   getInitialState() {
     return {
       shopDetail: [],
-      shopId: []
+      shopId: [],
+      shopName: []
     };
   }
 
@@ -22,6 +23,12 @@ class ShopStore extends ReduceStore {
         return {
           shopDetail: [],
           shopId: []
+        };
+      case actions.POST_NEWSHOP:
+        return {
+          ...state,
+          shopName: action.data.name,
+          shopDetail: action.data.detail
         };
       default:
         return state;
