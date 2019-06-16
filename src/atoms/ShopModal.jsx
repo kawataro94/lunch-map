@@ -1,28 +1,28 @@
-import React from 'react';
-import styled from 'styled-components';
-import Modal from 'react-modal';
+import React from "react";
+import styled from "styled-components";
+import Modal from "react-modal";
 
-import Form from './Form';
+import Form from "./Form";
 
-import ActionCreator from '../flux/actions/ActionCreator';
+import ActionCreator from "../flux/actions/ActionCreator";
 
 const customStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-20%',
-    transform: 'translate(-50%, -50%)',
-    width: '500px',
-    height: '500px',
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-20%",
+    transform: "translate(-50%, -50%)",
+    width: "500px",
+    height: "500px"
   },
   overlay: {
-    backgroundColor: 'rgba(0,0,0,0.1)',
-  },
+    backgroundColor: "rgba(0,0,0,0.1)"
+  }
 };
 
-export default ({store, update, isModal, displayModal}) => {
+export default ({ store, update, isModal, displayModal }) => {
   const modalToggle = () => {
     displayModal(!isModal);
     if (isModal) {
@@ -40,11 +40,11 @@ export default ({store, update, isModal, displayModal}) => {
 
   return (
     <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
-      <div style={{marginBottom: '20px'}}>
+      <div style={{ marginBottom: "20px" }}>
         <i
           class="material-icons"
           onClick={() => modalToggle()}
-          style={{cursor: 'pointer', float: 'right'}}
+          style={{ cursor: "pointer", float: "right" }}
         >
           clear
         </i>

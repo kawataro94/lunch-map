@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export default ({ label }) => {
+export default ({ label, onChange }) => {
   const ShopLabel = styled.h2`
     margin: 0;
     font-size: 14px;
@@ -17,7 +17,7 @@ export default ({ label }) => {
       <div>
         <ShopLabel>{label}</ShopLabel>
       </div>
-      <Input type="text" />
+      <Input type="text" onChange={onChange} />
     </div>
   );
 };

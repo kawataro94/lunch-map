@@ -1,8 +1,8 @@
 import React from "react";
 import Modal from "react-modal";
+import styled from "styled-components";
 
-import InputWithLabel from "./InputWithLabel";
-import Form from "./Form";
+import AddForm from "./AddForm";
 
 const customStyles = {
   content: {
@@ -20,6 +20,11 @@ const customStyles = {
   }
 };
 
+const UpdateText = styled.input`
+  margin: 10px 0;
+  border-radius: 5px;
+`;
+
 export default ({ isModal, modalToggle }) => {
   return (
     <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
@@ -32,13 +37,8 @@ export default ({ isModal, modalToggle }) => {
           clear
         </i>
       </div>
-      <InputWithLabel
-        label="店名"
-        // value={template.name}
-        margin="10px 0 0 0"
-        // onChange={e => handleChange("name", e.target.value)}
-      />
-      <Form />
+      <AddForm />
+      <UpdateText type="submit" value="登録する" />
     </Modal>
   );
 };
