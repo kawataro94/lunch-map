@@ -68,8 +68,6 @@ class Map extends React.Component {
 
   render() {
     const { stores, isAddModal } = this.state;
-    // const normal = true;
-    const addMap = false;
     return (
       <>
         <div style={{ height: "100vh", width: "100%", position: "relative" }}>
@@ -108,12 +106,6 @@ class Map extends React.Component {
               );
             })}
             <AddShopModal isModal={isAddModal} modalToggle={this.modalToggle} />
-            {addMap && (
-              <div>
-                <h1>成功です</h1>
-                <h2>成功です</h2>
-              </div>
-            )}
           </GoogleMapReact>
         </div>
       </>
