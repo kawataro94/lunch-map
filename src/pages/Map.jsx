@@ -1,16 +1,16 @@
-import React from 'react';
-import '../LunchMap.css';
-import styled from 'styled-components';
-import GoogleMapReact from 'google-map-react';
-import ShopStore from '../flux/stores/ShopStore';
-import {Container} from 'flux/utils';
-import {updateShopData, getShopData} from '../shopData';
+import React from "react";
+import "../LunchMap.css";
+import styled from "styled-components";
+import GoogleMapReact from "google-map-react";
+import ShopStore from "../flux/stores/ShopStore";
+import { Container } from "flux/utils";
+import { updateShopData, getShopData } from "../shopData";
 
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
 
-import Tooltip from '../atoms/Tooltip';
+import Tooltip from "../atoms/Tooltip";
 
-const OurOffice = ({text}) => <div>{text}</div>;
+const OurOffice = ({ text }) => <div>{text}</div>;
 
 const ButtonUL = styled.ul`
   display: flex;
@@ -24,9 +24,9 @@ class Map extends React.Component {
   static defaultProps = {
     center: {
       lat: 33.585284,
-      lng: 130.392775,
+      lng: 130.392775
     },
-    zoom: 18,
+    zoom: 18
   };
 
   constructor(props) {
@@ -34,13 +34,13 @@ class Map extends React.Component {
 
     this.state = {
       stores: [],
-      category: '',
-      modalId: '',
+      category: "",
+      modalId: ""
     };
 
     this.setModalId = id => {
       this.setState({
-        modalId: id,
+        modalId: id
       });
     };
   }
@@ -51,21 +51,21 @@ class Map extends React.Component {
 
   static calculateState() {
     return {
-      updateData: ShopStore.getState(),
+      updateData: ShopStore.getState()
     };
   }
 
   setShopData = () => {
     getShopData().then(shopData => {
       this.setState({
-        stores: shopData,
+        stores: shopData
       });
     });
   };
 
   displayCategory = category => {
     this.setState({
-      category: category,
+      category: category
     });
   };
 
@@ -73,22 +73,16 @@ class Map extends React.Component {
     this.setShopData();
   }
 
-  update = () => {
-    const {updateData, stores} = this.state;
-    updateShopData(stores, updateData);
-    this.setShopData();
-  };
-
   render() {
-    const {stores, category} = this.state;
+    const {aaaaaaaaaa stores, category } = this.state;
     console.log(category);
 
     return (
       <div>
-        <div style={{height: '100vh', width: '100%'}}>
+        <div style={{ height: "100vh", width: "100%" }}>
           <GoogleMapReact
             bootstrapURLKeys={{
-              key: 'AIzaSyBaBZTLNvI_6C3eDd5d-XRKoX-LedbUnFU',
+              key: "AIzaSyBaBZTLNvI_6C3eDd5d-XRKoX-LedbUnFU"
             }}
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
@@ -110,28 +104,28 @@ class Map extends React.Component {
                 );
               })}
             <ButtonUL>
-              <div style={{marginRight: '10px'}}>
+              <div style={{ marginRight: "10px" }}>
                 <Button
                   variant="contained"
-                  onClick={() => this.displayCategory('中華')}
+                  onClick={() => this.displayCategory("中華")}
                 >
                   中華
                 </Button>
               </div>
-              <div style={{marginRight: '10px'}}>
+              <div style={{ marginRight: "10px" }}>
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => this.displayCategory('和食')}
+                  onClick={() => this.displayCategory("和食")}
                 >
                   和食
                 </Button>
               </div>
-              <div style={{marginRight: '10px'}}>
+              <div style={{ marginRight: "10px" }}>
                 <Button
                   variant="contained"
                   color="secondary"
-                  onClick={() => this.displayCategory('フレンチ')}
+                  onClick={() => this.displayCategory("フレンチ")}
                 >
                   フレンチ
                 </Button>
