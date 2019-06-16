@@ -30,7 +30,7 @@ export default ({ isModal, modalToggle }) => {
     <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
       <div style={{ marginBottom: "20px" }}>
         <i
-          class="material-icons"
+          className="material-icons"
           onClick={() => modalToggle()}
           style={{ cursor: "pointer", float: "right" }}
         >
