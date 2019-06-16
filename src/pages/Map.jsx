@@ -1,14 +1,24 @@
 import React from "react";
+import styled from "styled-components";
 import "../LunchMap.css";
 import GoogleMapReact from "google-map-react";
 import { updateShopData, getShopData, _onClick } from "../shopData";
 
+import Button from "@material-ui/core/Button";
 import Tooltip from "../atoms/Tooltip";
-
 import Fab from "@material-ui/core/Fab";
 import AddShopModal from "../atoms/AddShopModal";
 
 const OurOffice = ({ text }) => <div>{text}</div>;
+
+const ButtonUL = styled.ul`
+  display: flex;
+  position: absolute;
+  top: 300px;
+  bottom: 0;
+  right: 0;
+  left: -180px;
+`;
 class Map extends React.Component {
   static defaultProps = {
     center: {
@@ -24,7 +34,8 @@ class Map extends React.Component {
     this.state = {
       stores: [],
       modalId: "",
-      isAddModal: false
+      isAddModal: false,
+      category: ""
     };
 
     this.setModalId = id => {
@@ -42,6 +53,12 @@ class Map extends React.Component {
     });
   };
 
+  displayCategory = category => {
+    this.setState({
+      category: category
+    });
+  };
+
   componentDidMount() {
     this.setShopData();
   }
@@ -56,18 +73,16 @@ class Map extends React.Component {
   modalToggle = () => {
     const { isAddModal } = this.state;
     this.setState({ isAddModal: !isAddModal });
-    if (this.state.isAddModal) {
-      // ActionCreator.resetShopId();
-    }
   };
 
   shopModal = () => {
     this.modalToggle();
-    // setModalId(id);
   };
 
   render() {
-    const { stores, isAddModal } = this.state;
+    const { stores, category } = this.state;
+    const { isAddModal } = this.state;
+
     return (
       <>
         <div style={{ height: "100vh", width: "100%", position: "relative" }}>
@@ -92,19 +107,49 @@ class Map extends React.Component {
             onClick={_onClick}
           >
             <OurOffice lat={33.585284} lng={130.392775} text="●Pear●" />
-            {stores.map(store => {
-              return (
-                <Tooltip
-                  lat={store.lat}
-                  lng={store.lng}
-                  store={store}
-                  key={store.id}
-                  onChange={this.handleChange}
-                  setModalId={this.setModalId}
-                  update={this.update}
-                />
-              );
-            })}
+            {stores
+              .filter(store => store.category === category)
+              .map(store => {
+                return (
+                  <Tooltip
+                    lat={store.lat}
+                    lng={store.lng}
+                    store={store}
+                    key={store.id}
+                    onChange={this.handleChange}
+                    setModalId={this.setModalId}
+                    update={this.update}
+                  />
+                );
+              })}
+            <ButtonUL>
+              <div style={{ marginRight: "10px" }}>
+                <Button
+                  variant="contained"
+                  onClick={() => this.displayCategory("中華")}
+                >
+                  中華
+                </Button>
+              </div>
+              <div style={{ marginRight: "10px" }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => this.displayCategory("和食")}
+                >
+                  和食
+                </Button>
+              </div>
+              <div style={{ marginRight: "10px" }}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => this.displayCategory("フレンチ")}
+                >
+                  フレンチ
+                </Button>
+              </div>
+            </ButtonUL>
             <AddShopModal isModal={isAddModal} modalToggle={this.modalToggle} />
           </GoogleMapReact>
         </div>

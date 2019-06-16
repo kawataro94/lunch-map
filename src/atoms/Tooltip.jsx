@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import styled from 'styled-components';
-import Modal from 'react-modal';
-import ShopModal from './ShopModal';
-import ActionCreator from '../flux/actions/ActionCreator';
+import React, { useState } from "react";
+import styled from "styled-components";
+import Modal from "react-modal";
+import ShopModal from "./ShopModal";
+import ActionCreator from "../flux/actions/ActionCreator";
 
 const Tip = styled.div`
   position: relative;
@@ -20,7 +20,7 @@ const Tip = styled.div`
   box-sizing: border-box;
   z-index: 3;
   :before {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -24px;
     left: 50%;
@@ -30,7 +30,7 @@ const Tip = styled.div`
     z-index: 2;
   }
   :after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -29px;
     left: 50%;
@@ -53,9 +53,9 @@ const ShopName = styled.div`
   color: #000;
 `;
 
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 
-export default ({store, setModalId, update}) => {
+export default ({ store, setModalId, update }) => {
   const [isModal, displayModal] = useState(false);
 
   const modalToggle = () => {
