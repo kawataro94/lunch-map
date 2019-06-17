@@ -43,7 +43,7 @@ class Form extends React.Component {
 
   handleChange = async e => {
     await ActionCreator.changeDetail(e.target.value);
-    this.props.update(e);
+    this.props.update();
   };
 
   componentDidMount() {
