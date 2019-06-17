@@ -2,7 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import "../LunchMap.css";
 import GoogleMapReact from "google-map-react";
+import { Container } from "flux/utils";
 import { updateShopData, getShopData, _onClick } from "../shopData";
+
+import ShopStore from "../flux/stores/ShopStore";
 
 import Button from "@material-ui/core/Button";
 import Tooltip from "../atoms/Tooltip";
@@ -42,6 +45,16 @@ class Map extends React.Component {
       this.setState({
         modalId: id
       });
+    };
+  }
+
+  static getStores() {
+    return [ShopStore];
+  }
+
+  static calculateState() {
+    return {
+      updateData: ShopStore.getState()
     };
   }
 
@@ -158,4 +171,4 @@ class Map extends React.Component {
   }
 }
 
-export default Map;
+export default Container.create(Map);
