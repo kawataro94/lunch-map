@@ -15,6 +15,7 @@ const TextArea = styled.textarea`
   height: 350px;
   padding: 10px;
   font-size: 20px;
+  border: 1px solid rgb(0, 0, 0);
 `;
 
 const UpdateText = styled.input`
@@ -42,13 +43,13 @@ class Form extends React.Component {
 
   handleChange = async e => {
     await ActionCreator.changeDetail(e.target.value);
-    this.props.update(e);
+    this.props.update();
   };
 
   componentDidMount() {
     const setData = async () => {
-      await ActionCreator.postDetail(this.props.shopDetail);
-      await ActionCreator.postId(this.props.id);
+      ActionCreator.postDetail(this.props.shopDetail);
+      ActionCreator.postId(this.props.id);
     };
 
     setData();
