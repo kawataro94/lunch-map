@@ -12,7 +12,9 @@ import Tooltip from "../atoms/Tooltip";
 import Fab from "@material-ui/core/Fab";
 import AddShopModal from "../atoms/AddShopModal";
 
-const OurOffice = ({ text }) => <div>{text}</div>;
+const OurOffice = styled.div`
+  width: 50px;
+`
 
 const ButtonUL = styled.ul`
   display: flex;
@@ -38,7 +40,10 @@ class Map extends React.Component {
       stores: [],
       modalId: "",
       isAddModal: false,
-      category: ""
+      category: "",
+      draggable: true,
+      lat: 33.585284,
+      lng: 130.392775
     };
 
     this.setModalId = id => {
@@ -92,6 +97,24 @@ class Map extends React.Component {
     this.modalToggle();
   };
 
+  onCircleInteraction = (childKey, childProps, mouse) => {
+    // function is just a stub to test callbacks
+    this.setState({
+      draggable: false,
+      lat: mouse.lat,
+      lng: mouse.lng
+    });
+
+    console.log('onCircleInteraction called with', childKey, childProps, mouse);
+  }
+
+  onCircleInteraction3 = (childKey, childProps, mouse) => {
+    this.setState({ draggable: true });
+    // function is just a stub to test callbacks  
+    console.log('onCircleInteraction called with', childKey, childProps, mouse);
+
+  }
+
   render() {
     const { stores, category } = this.state;
     const { isAddModal } = this.state;
@@ -117,9 +140,17 @@ class Map extends React.Component {
             }}
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
-            onClick={_onClick}
+            // onClick={_onClick}
+            draggable={this.state.draggable}
+            onChildMouseDown={this.onCircleInteraction}
+            onChildMouseUp={this.onCircleInteraction3}
+            onChildMouseMove={this.onCircleInteraction}
+            onChildClick={() => console.log('child click')}
+            onClick={() => console.log('mapClick')}
           >
-            <OurOffice lat={33.585284} lng={130.392775} text="●Pear●" />
+            <OurOffice lat={this.state.lat} lng={this.state.lng}>
+              ●Pear●
+            </OurOffice>
             {stores
               .filter(store => store.category === category)
               .map(store => {
@@ -129,7 +160,6 @@ class Map extends React.Component {
                     lng={store.lng}
                     store={store}
                     key={store.id}
-                    onChange={this.handleChange}
                     setModalId={this.setModalId}
                     update={this.update}
                   />

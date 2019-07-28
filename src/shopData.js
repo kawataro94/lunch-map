@@ -16,7 +16,7 @@ export const updateShopData = (stores, updateData) => {
       ...stores[updateData.shopId],
       shopDetail: updateData.shopDetail
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.error("Error writing document: ", error);
     });
 };
@@ -44,8 +44,8 @@ export const getShopData = () => {
 };
 
 export const _onClick = ({ lat, lng }) => {
-  console.log("click now");
-  console.log(lat, lng);
+  // console.log("click now");
+  // console.log(lat, lng);
   db.collection("stores")
     .doc("2")
     .set({
@@ -55,10 +55,10 @@ export const _onClick = ({ lat, lng }) => {
       lat: `${lat}`,
       id: "2"
     })
-    .then(function() {
+    .then(function () {
       console.log("Document successfully written!");
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.error("Error writing document: ", error);
     });
 };
