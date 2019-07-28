@@ -37,26 +37,26 @@ export const getShopData = () => {
           category: doc.data().category
         });
       });
+      console.log(dataArray)
       return dataArray;
     });
 
   return storeData;
 };
 
-export const _onClick = ({ lat, lng }) => {
-  // console.log("click now");
-  // console.log(lat, lng);
+export const addShopData = (lat, lng, newShopName, newShopDetail) => {
   db.collection("stores")
     .doc("2")
     .set({
-      shopName: "sample",
-      shopDetail: "sampleの詳細",
+      shopName: newShopName,
+      shopDetail: newShopDetail,
       lng: `${lng}`,
       lat: `${lat}`,
-      id: "2"
+      id: "2",
+      category: "フレンチ"
     })
     .then(function () {
-      console.log("Document successfully written!");
+      console.log("Document successfully　add");
     })
     .catch(function (error) {
       console.error("Error writing document: ", error);

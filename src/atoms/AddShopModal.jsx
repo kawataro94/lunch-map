@@ -20,12 +20,7 @@ const customStyles = {
   }
 };
 
-const UpdateText = styled.input`
-  margin: 10px 0;
-  border-radius: 5px;
-`;
-
-export default ({ isModal, modalToggle }) => {
+export default ({ isModal, modalToggle, addShop }) => {
   return (
     <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
       <div style={{ marginBottom: "20px" }}>
@@ -37,8 +32,7 @@ export default ({ isModal, modalToggle }) => {
           clear
         </i>
       </div>
-      <AddForm />
-      <UpdateText type="submit" value="登録する" />
+      <AddForm addShop={addShop} />
     </Modal>
   );
 };

@@ -47,7 +47,7 @@ class Form extends React.Component {
   };
 
   componentDidMount() {
-    const setData = async () => {
+    const setData = () => {
       ActionCreator.postDetail(this.props.shopDetail);
       ActionCreator.postId(this.props.id);
     };
@@ -61,8 +61,8 @@ class Form extends React.Component {
       <>
         <form>
           <AboutShop>詳細について</AboutShop>
-          <TextArea onChange={this.handleChange} defaultValue={shopDetail} />
-          <UpdateText type="submit" value="登録する" />
+          <TextArea onChange={this.handleChange} defaultValue="asdf" />
+          {/* <UpdateText type="submit" value="登録する" /> */}
         </form>
       </>
     );
