@@ -18,11 +18,6 @@ const TextArea = styled.textarea`
   border: 1px solid rgb(0, 0, 0);
 `;
 
-const UpdateText = styled.input`
-  margin: 10px 0;
-  border-radius: 5px;
-`;
-
 class Form extends React.Component {
   static getStores() {
     return [ShopStore];
@@ -62,10 +57,6 @@ class Form extends React.Component {
         <form>
           <AboutShop>詳細について</AboutShop>
           <TextArea onChange={this.handleChange} defaultValue={shopDetail} />
-<<<<<<< HEAD:src/atoms/form.jsx
-          {/* <UpdateText type="submit" value="登録する" /> */}
-=======
->>>>>>> 49b190874cea09945662215be9aefe76f6635a3d:src/atoms/Form.jsx
         </form>
       </>
     );

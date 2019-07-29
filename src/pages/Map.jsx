@@ -9,12 +9,7 @@ import ShopStore from "../flux/stores/ShopStore";
 
 import Button from "@material-ui/core/Button";
 import Tooltip from "../atoms/Tooltip";
-import Fab from "@material-ui/core/Fab";
 import AddShopModal from "../atoms/AddShopModal";
-
-const OurOffice = styled.div`
-  width: 50px;
-`
 
 const ButtonUL = styled.ul`
   display: flex;
@@ -24,14 +19,6 @@ const ButtonUL = styled.ul`
   right: 0;
   left: -180px;
 `;
-
-const AddButton = styled.div`
-  // position: absolute;
-  // top: 300px;
-  // bottom: 0;
-  // right: 0;
-  // left: 300px;
-`
 
 class Map extends React.Component {
   static defaultProps = {
@@ -83,7 +70,9 @@ class Map extends React.Component {
 
       maps.event.addDomListener(window, 'mouseup', () => {
         if (this.state.start) {
-          this.state.end = new Date().getTime();
+          this.setState({
+            end: new Date().getTime()
+          })
           const longpress = (this.state.end - this.state.start < 500) ? false : true;
 
           if (longpress) {
@@ -123,7 +112,7 @@ class Map extends React.Component {
 
   addShop = () => {
     this.modalToggle()
-    const { updateData, stores, lat, lng } = this.state;
+    const { lat, lng, updateData } = this.state;
     addShopData(lat, lng, updateData.newShopName, updateData.newShopDetail)
     this.setShopData();
   };
@@ -133,10 +122,12 @@ class Map extends React.Component {
     this.setState({ isAddModal: !isAddModal });
   };
 
-  getLocation = (e) => this.setState({
-    lat: e.lat,
-    lng: e.lng,
-  })
+  getLocation = (e) => {
+    this.setState({
+      lat: e.lat,
+      lng: e.lng,
+    })
+  }
 
   render() {
     const { stores, category } = this.state;
@@ -150,7 +141,7 @@ class Map extends React.Component {
             }}
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
-            onClick={() => this.getLocation()}
+            onClick={(e) => this.getLocation(e)}
             onGoogleApiLoaded={({ map, maps }) => this.apiIsLoaded(map, maps)}
           >
             {stores
