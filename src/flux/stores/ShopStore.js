@@ -30,7 +30,8 @@ class ShopStore extends ReduceStore {
         return {
           // ...state,
           newShopName: action.data.name,
-          newShopDetail: action.data.detail
+          newShopDetail: action.data.detail,
+          shopDetail: action.data.detail
         };
       default:
         return state;

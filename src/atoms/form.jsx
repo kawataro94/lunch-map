@@ -61,7 +61,7 @@ class Form extends React.Component {
       <>
         <form>
           <AboutShop>詳細について</AboutShop>
-          <TextArea onChange={this.handleChange} defaultValue="asdf" />
+          <TextArea onChange={this.handleChange} defaultValue={shopDetail} />
           {/* <UpdateText type="submit" value="登録する" /> */}
         </form>
       </>

@@ -37,7 +37,6 @@ export const getShopData = () => {
           category: doc.data().category
         });
       });
-      console.log(dataArray)
       return dataArray;
     });
 
@@ -46,13 +45,12 @@ export const getShopData = () => {
 
 export const addShopData = (lat, lng, newShopName, newShopDetail) => {
   db.collection("stores")
-    .doc("2")
+    .doc()
     .set({
       shopName: newShopName,
       shopDetail: newShopDetail,
       lng: `${lng}`,
       lat: `${lat}`,
-      id: "2",
       category: "フレンチ"
     })
     .then(function () {
@@ -61,4 +59,5 @@ export const addShopData = (lat, lng, newShopName, newShopDetail) => {
     .catch(function (error) {
       console.error("Error writing document: ", error);
     });
+  getShopData()
 };

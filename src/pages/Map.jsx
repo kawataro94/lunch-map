@@ -103,7 +103,6 @@ class Map extends React.Component {
       this.setState({
         stores: shopData
       });
-      console.log(shopData)
     });
   };
 
@@ -126,8 +125,6 @@ class Map extends React.Component {
   addShop = () => {
     this.modalToggle()
     const { updateData, stores, lat, lng } = this.state;
-    console.log(updateData.newShopDetail, stores)
-    console.log(lat, lng)
     addShopData(lat, lng, updateData.newShopName, updateData.newShopDetail)
     this.setShopData();
   };
@@ -136,10 +133,6 @@ class Map extends React.Component {
   modalToggle = () => {
     const { isAddModal } = this.state;
     this.setState({ isAddModal: !isAddModal });
-  };
-
-  shopModal = () => {
-    this.modalToggle();
   };
 
   onCircleInteraction = (childKey, childProps, mouse) => {
@@ -172,7 +165,6 @@ class Map extends React.Component {
   render() {
     const { stores, category } = this.state;
     const { isAddModal } = this.state;
-    console.log(stores)
     return (
       <>
         <div style={{ height: "100vh", width: "100%", position: "relative" }}>
@@ -193,13 +185,13 @@ class Map extends React.Component {
           >
             {stores
               .filter(store => store.category === category)
-              .map(store => {
+              .map((store, index) => {
                 return (
                   <Tooltip
                     lat={store.lat}
                     lng={store.lng}
                     store={store}
-                    key={store.id}
+                    key={index}
                     setModalId={this.setModalId}
                     update={this.update}
                   />

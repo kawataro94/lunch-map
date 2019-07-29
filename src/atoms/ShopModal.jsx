@@ -37,7 +37,6 @@ export default ({ store, update, isModal, displayModal }) => {
     font-weight: bold;
     color: #000;
   `;
-
   return (
     <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
       <div style={{ marginBottom: "20px" }}>
