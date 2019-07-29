@@ -70,7 +70,6 @@ class Map extends React.Component {
   static calculateState() {
     return {
       updateData: ShopStore.getState()
-      // createData: ShopStore.getState()
     };
   }
 
@@ -129,38 +128,15 @@ class Map extends React.Component {
     this.setShopData();
   };
 
-  // AddModal
   modalToggle = () => {
     const { isAddModal } = this.state;
     this.setState({ isAddModal: !isAddModal });
   };
 
-  onCircleInteraction = (childKey, childProps, mouse) => {
-    // function is just a stub to test callbacks
-    this.setState({
-      draggable: false,
-      lat: mouse.lat,
-      lng: mouse.lng
-    });
-
-    console.log('mouse uo', childKey, childProps, mouse);
-    if (this.state.start) {
-      this.state.end = new Date().getTime();
-      const longpress = (this.state.end - this.state.start < 500) ? false : true;
-
-      if (longpress) {
-        alert("ロングタップです。");
-      }
-    }
-  }
-
-  onCircleInteraction3 = (childKey, childProps, mouse) => {
-    this.setState({
-      draggable: false, start: new Date().getTime()
-    });
-    // function is just a stub to test callbacks  
-    console.log('mouse down', childKey, childProps, mouse);
-  }
+  getLocation = (e) => this.setState({
+    lat: e.lat,
+    lng: e.lng,
+  })
 
   render() {
     const { stores, category } = this.state;
@@ -174,13 +150,7 @@ class Map extends React.Component {
             }}
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
-            onChildMouseDown={this.onCircleInteraction3}
-            onChildMouseUp={this.onCircleInteraction}
-            onChildClick={() => console.log('child click')}
-            onClick={(e) => this.setState({
-              lat: e.lat,
-              lng: e.lng,
-            })}
+            onClick={() => this.getLocation()}
             onGoogleApiLoaded={({ map, maps }) => this.apiIsLoaded(map, maps)}
           >
             {stores
