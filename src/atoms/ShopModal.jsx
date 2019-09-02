@@ -3,8 +3,10 @@ import styled from "styled-components";
 import Modal from "react-modal";
 
 import Form from "./Form";
+import Link from '@material-ui/core/Link';
 
 import ActionCreator from "../flux/actions/ActionCreator";
+import Chip from '@material-ui/core/Chip';
 
 const customStyles = {
   content: {
@@ -31,12 +33,24 @@ export default ({ store, update, isModal, displayModal }) => {
   };
 
   const ModalShopName = styled.h1`
-    margin: 0 0 30px 0;
+    margin: 0;
     padding: 0;
     text-align: center;
     font-weight: bold;
     color: #000;
   `;
+
+  const tagColor = () => {
+    if (store.category === "フレンチ") {
+      return "secondary"
+    } else if (store.category === "和食") {
+      return "primary"
+    } else if (store.category === "中華") {
+      return "normal"
+    }
+  }
+
+
   return (
     <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
       <div style={{ marginBottom: "20px" }}>
@@ -49,7 +63,9 @@ export default ({ store, update, isModal, displayModal }) => {
         </i>
       </div>
       <ModalShopName>{store.shopName}</ModalShopName>
+      <Chip size="small" label={store.category} color={tagColor()} />
       <Form update={update} shopDetail={store.shopDetail} id={store.id} />
+      <Link href={store.shopLink}>Link</Link>
     </Modal>
   );
 };

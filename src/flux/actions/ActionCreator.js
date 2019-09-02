@@ -25,10 +25,10 @@ const ActionCreators = {
       type: actions.RESET_SHOPID
     });
   },
-  addShop(shopName, shopDetail) {
+  addShop(shopName, shopDetail, shopCategory, shopLink) {
     flux.dispatch({
       type: actions.POST_NEWSHOP,
-      data: { name: shopName, detail: shopDetail }
+      data: { name: shopName, detail: shopDetail, category: shopCategory, link: shopLink }
     });
   }
 };

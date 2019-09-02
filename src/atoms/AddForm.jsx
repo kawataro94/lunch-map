@@ -1,37 +1,15 @@
 import React from "react";
-import styled from "styled-components";
 import ShopStore from "../flux/stores/ShopStore";
 import ActionCreator from "../flux/actions/ActionCreator";
 import { Container } from "flux/utils";
+import TextField from '@material-ui/core/TextField';
 
-const AboutShop = styled.h2`
-  margin: 5px 0;
-  font-size: 14px;
-`;
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
-const TextArea = styled.textarea`
-  box-sizing: border-box;
-  width: 500px;
-  height: 350px;
-  padding: 10px;
-  font-size: 20px;
-  border: 1px solid rgb(0, 0, 0);
-`;
-
-const UpdateText = styled.div`
-  margin: 10px 0;
-  border-radius: 5px;
-`;
-
-const ShopLabel = styled.h2`
-margin: 0;
-font-size: 14px;
-`;
-const Input = styled.input`
-width: 300px;
-padding: 5px;
-border: 1px solid rgb(0, 0, 0);
-`;
+import Button from '@material-ui/core/Button';
 
 class AddForm extends React.Component {
   constructor(props) {
@@ -39,7 +17,9 @@ class AddForm extends React.Component {
 
     this.state = {
       newShopName: "",
-      newShopDetail: ""
+      newShopDetail: "",
+      newShopCategory: "",
+      newShopLink: "",
     };
   }
 
@@ -65,24 +45,79 @@ class AddForm extends React.Component {
     })
   };
 
+  handleCategoryChange = async e => {
+    this.setState({
+      newShopCategory: e.target.value
+    })
+  };
+
+  handleLinkChange = async e => {
+    this.setState({
+      newShopLink: e.target.value
+    })
+  };
+
   addShop = async () => {
-    console.log(this.state.newShopName, this.state.newShopDetail)
-    await ActionCreator.addShop(this.state.newShopName, this.state.newShopDetail);
+    await ActionCreator.addShop(this.state.newShopName, this.state.newShopDetail, this.state.newShopCategory, this.state.newShopLink);
     this.props.addShop();
   };
 
   render() {
+
     return (
       <>
         <div>
-          <ShopLabel>店名</ShopLabel>
+          <TextField
+            required
+            id="standard-required"
+            label="店名"
+            defaultValue=""
+            onChange={this.handleNameChange}
+            margin="normal"
+          />
+          <FormControl required style={{ marginTop: 16, marginLeft: 20 }}>
+            <InputLabel htmlFor="age-required">カテゴリ</InputLabel>
+            <Select
+              onChange={this.handleCategoryChange}
+              name="category"
+              style={{ width: 200 }}
+              value={this.state.newShopCategory}
+            >
+              <MenuItem value="フレンチ">フレンチ</MenuItem>
+              <MenuItem value="中華">中華</MenuItem>
+              <MenuItem value="和食">和食</MenuItem>
+            </Select>
+          </FormControl>
         </div>
-        <Input type="text" onChange={this.handleNameChange} />
         <form>
-          <AboutShop>詳細について</AboutShop>
-          <TextArea onChange={this.handleDetailChange} defaultValue="" />
+          <TextField
+            id="outlined-multiline-static"
+            label="詳細について"
+            multiline
+            defaultValue=""
+            margin="normal"
+            variant="outlined"
+            rows="16"
+            style={{ width: 600, height: 350 }}
+            onChange={this.handleDetailChange}
+          />
         </form>
-        <UpdateText onClick={() => this.addShop()} >登録する</UpdateText>
+        <TextField
+          id="outlined-multiline-static"
+          label="Link"
+          multiline
+          defaultValue=""
+          margin="normal"
+          variant="outlined"
+          rows="1"
+          style={{ width: 600 }}
+          onChange={this.handleLinkChange}
+        />
+        <div style={{ marginTop: 20 }}>
+          <Button variant="contained" color="primary" onClick={() => this.addShop()}>
+            登録する
+        </Button>
+        </div>
       </>
     );
   }
