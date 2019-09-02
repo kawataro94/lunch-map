@@ -16,7 +16,7 @@ export const updateShopData = (stores, updateData) => {
       ...stores[updateData.shopId],
       shopDetail: updateData.shopDetail
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.error("Error writing document: ", error);
     });
 };
@@ -43,22 +43,21 @@ export const getShopData = () => {
   return storeData;
 };
 
-export const _onClick = ({ lat, lng }) => {
-  console.log("click now");
-  console.log(lat, lng);
+export const addShopData = (lat, lng, newShopName, newShopDetail) => {
   db.collection("stores")
-    .doc("2")
+    .doc()
     .set({
-      shopName: "sample",
-      shopDetail: "sampleの詳細",
+      shopName: newShopName,
+      shopDetail: newShopDetail,
       lng: `${lng}`,
       lat: `${lat}`,
-      id: "2"
+      category: "フレンチ"
     })
-    .then(function() {
-      console.log("Document successfully written!");
+    .then(function () {
+      console.log("Document successfully　add");
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.error("Error writing document: ", error);
     });
+  getShopData()
 };

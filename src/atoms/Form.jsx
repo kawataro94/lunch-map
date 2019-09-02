@@ -18,11 +18,6 @@ const TextArea = styled.textarea`
   border: 1px solid rgb(0, 0, 0);
 `;
 
-const UpdateText = styled.input`
-  margin: 10px 0;
-  border-radius: 5px;
-`;
-
 class Form extends React.Component {
   static getStores() {
     return [ShopStore];

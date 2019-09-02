@@ -3,16 +3,13 @@ import styled from "styled-components";
 import "../LunchMap.css";
 import GoogleMapReact from "google-map-react";
 import { Container } from "flux/utils";
-import { updateShopData, getShopData, _onClick } from "../shopData";
+import { updateShopData, getShopData, addShopData } from "../shopData";
 
 import ShopStore from "../flux/stores/ShopStore";
 
 import Button from "@material-ui/core/Button";
 import Tooltip from "../atoms/Tooltip";
-import Fab from "@material-ui/core/Fab";
 import AddShopModal from "../atoms/AddShopModal";
-
-const OurOffice = ({ text }) => <div>{text}</div>;
 
 const ButtonUL = styled.ul`
   display: flex;
@@ -22,6 +19,7 @@ const ButtonUL = styled.ul`
   right: 0;
   left: -180px;
 `;
+
 class Map extends React.Component {
   static defaultProps = {
     center: {
@@ -38,7 +36,11 @@ class Map extends React.Component {
       stores: [],
       modalId: "",
       isAddModal: false,
-      category: ""
+      category: "",
+      lat: 33.585284,
+      lng: 130.392775,
+      start: null,
+      end: null
     };
 
     this.setModalId = id => {
@@ -57,6 +59,32 @@ class Map extends React.Component {
       updateData: ShopStore.getState()
     };
   }
+
+  apiIsLoaded = (map, maps) => {
+    if (maps) {
+      maps.event.addDomListener(window, 'mousedown', () => {
+        this.setState({
+          start: new Date().getTime()
+        });
+      });
+
+      maps.event.addDomListener(window, 'mouseup', () => {
+        if (this.state.start) {
+          this.setState({
+            end: new Date().getTime()
+          })
+          const longpress = (this.state.end - this.state.start < 500) ? false : true;
+
+          if (longpress) {
+            this.setState({
+              isAddModal: true
+            })
+
+          }
+        }
+      });
+    }
+  };
 
   setShopData = () => {
     getShopData().then(shopData => {
@@ -82,54 +110,49 @@ class Map extends React.Component {
     this.setShopData();
   };
 
-  // AddModal
+  addShop = () => {
+    this.modalToggle()
+    const { lat, lng, updateData } = this.state;
+    addShopData(lat, lng, updateData.newShopName, updateData.newShopDetail)
+    this.setShopData();
+  };
+
   modalToggle = () => {
     const { isAddModal } = this.state;
     this.setState({ isAddModal: !isAddModal });
   };
 
-  shopModal = () => {
-    this.modalToggle();
-  };
+  getLocation = (e) => {
+    this.setState({
+      lat: e.lat,
+      lng: e.lng,
+    })
+  }
 
   render() {
     const { stores, category } = this.state;
     const { isAddModal } = this.state;
-
     return (
       <>
         <div style={{ height: "100vh", width: "100%", position: "relative" }}>
-          <div style={{ position: "absolute", bottom: "50px", right: "90px" }}>
-            <Fab
-              color="primary"
-              aria-label="Add"
-              style={{ zIndex: 99 }}
-              onClick={() => this.shopModal()}
-            >
-              <i className="material-icons" style={{ fontSize: 30 }}>
-                add
-              </i>
-            </Fab>
-          </div>
           <GoogleMapReact
             bootstrapURLKeys={{
               key: "AIzaSyBaBZTLNvI_6C3eDd5d-XRKoX-LedbUnFU"
             }}
             defaultCenter={this.props.center}
             defaultZoom={this.props.zoom}
-            onClick={_onClick}
+            onClick={(e) => this.getLocation(e)}
+            onGoogleApiLoaded={({ map, maps }) => this.apiIsLoaded(map, maps)}
           >
-            <OurOffice lat={33.585284} lng={130.392775} text="●Pear●" />
             {stores
               .filter(store => store.category === category)
-              .map(store => {
+              .map((store, index) => {
                 return (
                   <Tooltip
                     lat={store.lat}
                     lng={store.lng}
                     store={store}
-                    key={store.id}
-                    onChange={this.handleChange}
+                    key={index}
                     setModalId={this.setModalId}
                     update={this.update}
                   />
@@ -163,7 +186,7 @@ class Map extends React.Component {
                 </Button>
               </div>
             </ButtonUL>
-            <AddShopModal isModal={isAddModal} modalToggle={this.modalToggle} />
+            <AddShopModal isModal={isAddModal} modalToggle={this.modalToggle} addShop={this.addShop} />
           </GoogleMapReact>
         </div>
       </>
