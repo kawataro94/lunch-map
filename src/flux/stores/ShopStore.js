@@ -10,6 +10,7 @@ class ShopStore extends ReduceStore {
       shopName: [],
       newShopName: "",
       newShopDetail: "",
+      newShopLink: "",
     };
   }
 
@@ -30,7 +31,9 @@ class ShopStore extends ReduceStore {
         return {
           newShopName: action.data.name,
           newShopDetail: action.data.detail,
-          shopDetail: action.data.detail
+          shopDetail: action.data.detail,
+          newShopCategory: action.data.category,
+          newShopLink: action.data.link,
         };
       default:
         return state;

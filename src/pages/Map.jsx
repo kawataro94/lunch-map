@@ -36,7 +36,7 @@ class Map extends React.Component {
       stores: [],
       modalId: "",
       isAddModal: false,
-      category: "",
+      category: "all",
       lat: 33.585284,
       lng: 130.392775,
       start: null,
@@ -111,9 +111,16 @@ class Map extends React.Component {
   };
 
   addShop = () => {
-    this.modalToggle()
+    this.modalToggle();
     const { lat, lng, updateData } = this.state;
-    addShopData(lat, lng, updateData.newShopName, updateData.newShopDetail)
+    addShopData(
+      lat,
+      lng,
+      updateData.newShopName,
+      updateData.newShopDetail,
+      updateData.newShopCategory,
+      updateData.newShopLink
+    )
     this.setShopData();
   };
 
@@ -145,7 +152,12 @@ class Map extends React.Component {
             onGoogleApiLoaded={({ map, maps }) => this.apiIsLoaded(map, maps)}
           >
             {stores
-              .filter(store => store.category === category)
+              .filter(store => {
+                if (category === "all") {
+                  return store.category !== category
+                }
+                return store.category === category
+              })
               .map((store, index) => {
                 return (
                   <Tooltip

@@ -2,21 +2,7 @@ import React from "react";
 import ShopStore from "../flux/stores/ShopStore";
 import ActionCreator from "../flux/actions/ActionCreator";
 import { Container } from "flux/utils";
-import styled from "styled-components";
-
-const AboutShop = styled.h2`
-  margin: 5px 0;
-  font-size: 14px;
-`;
-
-const TextArea = styled.textarea`
-  box-sizing: border-box;
-  width: 500px;
-  height: 350px;
-  padding: 10px;
-  font-size: 20px;
-  border: 1px solid rgb(0, 0, 0);
-`;
+import TextField from '@material-ui/core/TextField';
 
 class Form extends React.Component {
   static getStores() {
@@ -55,8 +41,17 @@ class Form extends React.Component {
     return (
       <>
         <form>
-          <AboutShop>詳細について</AboutShop>
-          <TextArea onChange={this.handleChange} defaultValue={shopDetail} />
+          <TextField
+            id="filled-multiline-static"
+            label="詳細について"
+            multiline
+            rows="16"
+            defaultValue={shopDetail}
+            margin="normal"
+            variant="filled"
+            style={{ width: 500, height: 350 }}
+            onChange={this.handleChange}
+          />
         </form>
       </>
     );

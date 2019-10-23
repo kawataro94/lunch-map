@@ -9,13 +9,14 @@ firebase.initializeApp({
 });
 const db = firebase.firestore();
 
-export const updateShopData = (stores, updateData) => {
+export const updateShopData = (stores, updatedData) => {
+
+  const updatedShopData = stores.filter(store => (store.id === updatedData.shopId))[0]
+  updatedShopData.shopDetail = updatedData.shopDetail
+
   db.collection("stores")
-    .doc(updateData.shopId)
-    .set({
-      ...stores[updateData.shopId],
-      shopDetail: updateData.shopDetail
-    })
+    .doc(updatedData.shopId)
+    .set(updatedShopData)
     .catch(function (error) {
       console.error("Error writing document: ", error);
     });
@@ -34,7 +35,8 @@ export const getShopData = () => {
           lat: doc.data().lat,
           lng: doc.data().lng,
           id: doc.id,
-          category: doc.data().category
+          category: doc.data().category,
+          shopLink: doc.data().shopLink
         });
       });
       return dataArray;
@@ -43,7 +45,7 @@ export const getShopData = () => {
   return storeData;
 };
 
-export const addShopData = (lat, lng, newShopName, newShopDetail) => {
+export const addShopData = (lat, lng, newShopName, newShopDetail, newShopCategory, newShopLink) => {
   db.collection("stores")
     .doc()
     .set({
@@ -51,7 +53,8 @@ export const addShopData = (lat, lng, newShopName, newShopDetail) => {
       shopDetail: newShopDetail,
       lng: `${lng}`,
       lat: `${lat}`,
-      category: "フレンチ"
+      category: newShopCategory,
+      shopLink: newShopLink
     })
     .then(function () {
       console.log("Document successfully　add");
