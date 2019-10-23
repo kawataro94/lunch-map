@@ -30,6 +30,12 @@ const ActionCreators = {
       type: actions.POST_NEWSHOP,
       data: { name: shopName, detail: shopDetail, category: shopCategory, link: shopLink }
     });
+  },
+  changeCurrentCategory(currentCategory) {
+    flux.dispatch({
+      type: actions.CHANGE_CURRENT_CATEGORY,
+      data: currentCategory
+    });
   }
 };
 
