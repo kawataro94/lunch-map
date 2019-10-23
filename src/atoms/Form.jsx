@@ -28,12 +28,8 @@ class Form extends React.Component {
   };
 
   componentDidMount() {
-    const setData = () => {
-      ActionCreator.postDetail(this.props.shopDetail);
-      ActionCreator.postId(this.props.id);
-    };
-
-    setData();
+    ActionCreator.postDetail(this.props.shopDetail);
+    ActionCreator.postId(this.props.id);
   }
 
   render() {

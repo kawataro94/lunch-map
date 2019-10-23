@@ -1,24 +1,14 @@
 import React from "react";
-import styled from "styled-components";
 import "../LunchMap.css";
 import GoogleMapReact from "google-map-react";
 import { Container } from "flux/utils";
 import { updateShopData, getShopData, addShopData } from "../shopData";
 
 import ShopStore from "../flux/stores/ShopStore";
-
-import Button from "@material-ui/core/Button";
+import CategoryStore from "../flux/stores/CategoryStore";
 import Tooltip from "../atoms/Tooltip";
 import AddShopModal from "../atoms/AddShopModal";
-
-const ButtonUL = styled.ul`
-  display: flex;
-  position: absolute;
-  top: 300px;
-  bottom: 0;
-  right: 0;
-  left: -180px;
-`;
+import CategoryButton from "../atoms/CategoryButton";
 
 class Map extends React.Component {
   static defaultProps = {
@@ -51,12 +41,13 @@ class Map extends React.Component {
   }
 
   static getStores() {
-    return [ShopStore];
+    return [ShopStore, CategoryStore];
   }
 
   static calculateState() {
     return {
-      updateData: ShopStore.getState()
+      shopStore: ShopStore.getState(),
+      categoryStore: CategoryStore.getState()
     };
   }
 
@@ -94,32 +85,26 @@ class Map extends React.Component {
     });
   };
 
-  displayCategory = category => {
-    this.setState({
-      category: category
-    });
-  };
-
   componentDidMount() {
     this.setShopData();
   }
 
   update = () => {
-    const { updateData, stores } = this.state;
-    updateShopData(stores, updateData);
+    const { shopStore, stores } = this.state;
+    updateShopData(stores, shopStore);
     this.setShopData();
   };
 
   addShop = () => {
     this.modalToggle();
-    const { lat, lng, updateData } = this.state;
+    const { lat, lng, shopStore } = this.state;
     addShopData(
       lat,
       lng,
-      updateData.newShopName,
-      updateData.newShopDetail,
-      updateData.newShopCategory,
-      updateData.newShopLink
+      shopStore.newShopName,
+      shopStore.newShopDetail,
+      shopStore.newShopCategory,
+      shopStore.newShopLink
     )
     this.setShopData();
   };
@@ -137,7 +122,7 @@ class Map extends React.Component {
   }
 
   render() {
-    const { stores, category } = this.state;
+    const { stores, categoryStore } = this.state;
     const { isAddModal } = this.state;
     return (
       <>
@@ -153,10 +138,10 @@ class Map extends React.Component {
           >
             {stores
               .filter(store => {
-                if (category === "all") {
-                  return store.category !== category
+                if (categoryStore.currentCategory === "all") {
+                  return store.category !== categoryStore.currentCategory
                 }
-                return store.category === category
+                return store.category === categoryStore.currentCategory
               })
               .map((store, index) => {
                 return (
@@ -170,7 +155,8 @@ class Map extends React.Component {
                   />
                 );
               })}
-            <ButtonUL>
+            <CategoryButton />
+            {/* <ButtonUL>
               <div style={{ marginRight: "10px" }}>
                 <Button
                   variant="contained"
@@ -197,7 +183,7 @@ class Map extends React.Component {
                   フレンチ
                 </Button>
               </div>
-            </ButtonUL>
+            </ButtonUL> */}
             <AddShopModal isModal={isAddModal} modalToggle={this.modalToggle} addShop={this.addShop} />
           </GoogleMapReact>
         </div>
