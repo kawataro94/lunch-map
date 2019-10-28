@@ -4,6 +4,11 @@ import Button from "@material-ui/core/Button";
 
 import ActionCreator from "../flux/actions/ActionCreator";
 
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+
 const ButtonUL = styled.ul`
   display: flex;
   position: absolute;
@@ -15,58 +20,35 @@ const ButtonUL = styled.ul`
 
 const CategoryButton = () => {
 
-  const [categoryState, setCategoryState] = useState("all")
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  const handleCategoryChange = async e => {
+    setSelectedCategory(e.target.value)
+  };
 
   useEffect(() => {
-    ActionCreator.changeCurrentCategory(categoryState);
-  }, [categoryState])
+    ActionCreator.changeCurrentCategory(selectedCategory);
+  }, [selectedCategory])
 
   const categories = [{ name: "中華", color: "default" }, { name: "和食", color: "primary" }, { name: "フレンチ", color: "secondary" }]
 
   return (
-    <ButtonUL>
-      {categories.map((category, idx) => {
-        return (
-          <div style={{ marginRight: "10px" }} key={idx}>
-            <Button
-              variant="contained"
-              onClick={() => setCategoryState(category.name)}
-              color={category.color}
-            >{category.name}</Button>
-          </div>
-        )
-      })}
-    </ButtonUL>
+    <div>
+      <FormControl style={{ marginTop: 16, marginLeft: 20 }}>
+        <InputLabel htmlFor="age-required">カテゴリ</InputLabel>
+        <Select
+          onChange={handleCategoryChange}
+          name="category"
+          style={{ width: 200 }}
+          value={selectedCategory}
+        >
+          <MenuItem value="all">all</MenuItem>
+          <MenuItem value="フレンチ">フレンチ</MenuItem>
+          <MenuItem value="中華">中華</MenuItem>
+          <MenuItem value="和食">和食</MenuItem>
+        </Select>
+      </FormControl></div>
 
-
-    // < ButtonUL >
-    //   <div style={{ marginRight: "10px" }}>
-    //     <Button
-    //       variant="contained"
-    //       onClick={() => this.displayCategory("中華")}
-    //     >
-    //       中華
-    //               </Button>
-    //   </div>
-    //   <div style={{ marginRight: "10px" }}>
-    //     <Button
-    //       variant="contained"
-    //       color="primary"
-    //       onClick={() => this.displayCategory("和食")}
-    //     >
-    //       和食
-    //               </Button>
-    //   </div>
-    //   <div style={{ marginRight: "10px" }}>
-    //     <Button
-    //       variant="contained"
-    //       color="secondary"
-    //       onClick={() => this.displayCategory("フレンチ")}
-    //     >
-    //       フレンチ
-    //     </Button>
-    //   </div>
-    // </ButtonUL >
   )
 }
 

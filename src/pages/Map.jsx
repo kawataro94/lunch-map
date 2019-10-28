@@ -9,18 +9,8 @@ import CategoryStore from "../flux/stores/CategoryStore";
 import Tooltip from "../atoms/Tooltip";
 import AddShopModal from "../atoms/AddShopModal";
 import CategoryButton from "../atoms/CategoryButton";
+import SideBar from "../components/SideBar";
 
-
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 
 
 class Map extends React.Component {
@@ -150,22 +140,9 @@ class Map extends React.Component {
     const { isAddModal } = this.state;
     return (
       <>
-        <div style={{ display: 'flex' }}>
-          <div style={{ width: 300 }}>
-            <List component="nav" aria-label="main mailbox folders" style={{ color: 'gray' }}>
-              <ListItem button>
-                <ListItemText primary="Lunch-map" />
-              </ListItem>
-            </List>
-            <Divider />
-            <List component="nav" aria-label="main mailbox folders">
-              <ListItem button>
-                <ListItemText primary="ストアを登録する" />
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="カテゴリを増やす" />
-              </ListItem>
-            </List>
+        <div style={{}}>
+          <div style={{ width: 300, position: "absolute", zIndex: 1000, backgroundColor: 'white' }}>
+            <SideBar />
           </div>
           <div style={{ height: "100vh", width: "100%", position: "relative" }}>
             <GoogleMapReact
