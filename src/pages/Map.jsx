@@ -5,7 +5,7 @@ import { Container } from "flux/utils";
 import { updateShopData, getShopData, addShopData } from "../shopData";
 
 import ShopStore from "../flux/stores/ShopStore";
-import CategoryStore from "../flux/stores/CategoryStore";
+import CurrentStateStore from "../flux/stores/CurrentStateStore";
 import Tooltip from "../atoms/Tooltip";
 import AddShopModal from "../atoms/AddShopModal";
 import CategoryButton from "../atoms/CategoryButton";
@@ -45,42 +45,15 @@ class Map extends React.Component {
   }
 
   static getStores() {
-    return [ShopStore, CategoryStore];
+    return [ShopStore, CurrentStateStore];
   }
 
   static calculateState() {
     return {
       shopStore: ShopStore.getState(),
-      categoryStore: CategoryStore.getState()
+      currentStateStore: CurrentStateStore.getState()
     };
   }
-
-  apiIsLoaded = (map, maps) => {
-    if (maps) {
-      maps.event.addDomListener(window, 'mousedown', () => {
-        this.setState({
-          start: new Date().getTime()
-        });
-      });
-
-      maps.event.addDomListener(window, 'mouseup', () => {
-        if (this.state.start) {
-          this.setState({
-            end: new Date().getTime()
-          })
-          const longpress = (this.state.end - this.state.start < 500) ? false : true;
-
-          if (longpress) {
-            this.setState({
-              selectedPoint: true,
-              // isAddModal: true
-            })
-
-          }
-        }
-      });
-    }
-  };
 
   setShopData = () => {
     getShopData().then(shopData => {
@@ -122,7 +95,6 @@ class Map extends React.Component {
   getLocation = (e) => {
 
     this.setState({
-      // selectedPoint: false,
       lat: e.lat,
       lng: e.lng,
     })
@@ -136,11 +108,11 @@ class Map extends React.Component {
   }
 
   render() {
-    const { stores, categoryStore, selectedPoint, lat, lng } = this.state;
+    const { stores, currentStateStore, lat, lng } = this.state;
     const { isAddModal } = this.state;
     return (
       <>
-        <div style={{}}>
+        <div>
           <div style={{ width: 300, position: "absolute", zIndex: 1000, backgroundColor: 'white' }}>
             <SideBar />
           </div>
@@ -152,14 +124,14 @@ class Map extends React.Component {
               defaultCenter={this.props.center}
               defaultZoom={this.props.zoom}
               onClick={(e) => this.getLocation(e)}
-              onGoogleApiLoaded={({ map, maps }) => this.apiIsLoaded(map, maps)}
+            // onGoogleApiLoaded={({ map, maps }) => this.apiIsLoaded(map, maps)}
             >
               {stores
                 .filter(store => {
-                  if (categoryStore.currentCategory === "all") {
-                    return store.category !== categoryStore.currentCategory
+                  if (currentStateStore.currentCategory === "all") {
+                    return store.category !== currentStateStore.currentCategory
                   }
-                  return store.category === categoryStore.currentCategory
+                  return store.category === currentStateStore.currentCategory
                 })
                 .map((store, index) => {
                   return (
@@ -173,8 +145,7 @@ class Map extends React.Component {
                     />
                   );
                 })}
-              <CategoryButton />
-              {selectedPoint && <div onClick={this.setModal} lat={lat} lng={lng} style={{ fontSize: 50 }}>●</div>}
+              {currentStateStore.canRegisterState && <div onClick={this.setModal} lat={lat} lng={lng} style={{ fontSize: 50 }}>●</div>}
               <AddShopModal isModal={isAddModal} modalToggle={this.modalToggle} addShop={this.addShop} />
             </GoogleMapReact>
           </div>

@@ -1,22 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import styled from "styled-components";
-import Button from "@material-ui/core/Button";
 
-import ActionCreator from "../flux/actions/ActionCreator";
+import StateActionCreator from "../flux/actions/StateActionCreator";
 
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
-
-const ButtonUL = styled.ul`
-  display: flex;
-  position: absolute;
-  top: 300px;
-  bottom: 0;
-  right: 0;
-  left: -180px;
-`;
 
 const CategoryButton = () => {
 
@@ -27,10 +16,8 @@ const CategoryButton = () => {
   };
 
   useEffect(() => {
-    ActionCreator.changeCurrentCategory(selectedCategory);
+    StateActionCreator.changeCurrentCategory(selectedCategory);
   }, [selectedCategory])
-
-  const categories = [{ name: "中華", color: "default" }, { name: "和食", color: "primary" }, { name: "フレンチ", color: "secondary" }]
 
   return (
     <div>
