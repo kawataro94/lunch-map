@@ -1,6 +1,6 @@
 import React from "react";
 import ShopStore from "../flux/stores/ShopStore";
-import ActionCreator from "../flux/actions/ActionCreator";
+import StoreActionCreators from "../flux/actions/StoreActionCreators";
 import { Container } from "flux/utils";
 import TextField from "@material-ui/core/TextField";
 
@@ -38,7 +38,7 @@ class AddForm extends React.Component {
   }
 
   addShop = async () => {
-    await ActionCreator.addShop(this.state.newShopName, this.state.newShopDetail, this.state.newShopCategory, this.state.newShopLink);
+    await StoreActionCreators.addShop(this.state.newShopName, this.state.newShopDetail, this.state.newShopCategory, this.state.newShopLink);
     this.props.addShop();
   };
 

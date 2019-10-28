@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
 import ShopModal from "./ShopModal";
-import ActionCreator from "../flux/actions/ActionCreator";
+import StoreActionCreators from "../flux/actions/StoreActionCreators";
 
 const Tip = styled.div`
   position: relative;
@@ -61,7 +61,7 @@ export default ({ store, setModalId, update, lat, lng }) => {
   const modalToggle = () => {
     displayModal(!isModal);
     if (isModal) {
-      ActionCreator.resetShopId();
+      StoreActionCreators.resetShopId();
     }
   };
 

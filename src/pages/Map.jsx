@@ -8,7 +8,6 @@ import ShopStore from "../flux/stores/ShopStore";
 import CurrentStateStore from "../flux/stores/CurrentStateStore";
 import Tooltip from "../atoms/Tooltip";
 import AddShopModal from "../atoms/AddShopModal";
-import CategoryButton from "../atoms/CategoryButton";
 import SideBar from "../components/SideBar";
 
 
