@@ -1,8 +1,9 @@
 import React from "react";
 import "../LunchMap.css";
 import GoogleMapReact from "google-map-react";
+import styled from "styled-components";
 import { Container } from "flux/utils";
-import { updateShopData, getShopData, addShopData } from "../shopData";
+import { updateShopDetail, getShopData } from "../shopData";
 
 import ShopStore from "../flux/stores/ShopStore";
 import CurrentStateStore from "../flux/stores/CurrentStateStore";
@@ -10,7 +11,33 @@ import Tooltip from "../atoms/Tooltip";
 import AddShopModal from "../atoms/AddShopModal";
 import SideBar from "../components/SideBar";
 
+import PinImg from './marker.png';
 
+
+const ModalWrap = styled.div`
+  width: 270px; 
+  position: absolute; 
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  border-radius: 10px;
+  border: solid 2px #e3e3e3;
+  background-color: white;
+`
+
+const Marker = styled.div`
+  display: ${props => props.disable === true ? 'none' : 'block'};
+  background-color: black;
+  position: relative;
+`
+
+const Pin = styled.img`
+  position: absolute;
+  top: -40px;
+  left: -10px;
+  bottom: 0;
+  right: 0;
+`
 
 class Map extends React.Component {
   static defaultProps = {
@@ -43,6 +70,12 @@ class Map extends React.Component {
     };
   }
 
+  setModal = () => {
+    this.setState({
+      isAddModal: true
+    })
+  }
+
   static getStores() {
     return [ShopStore, CurrentStateStore];
   }
@@ -66,55 +99,28 @@ class Map extends React.Component {
     this.setShopData();
   }
 
-  update = () => {
-    const { shopStore, stores } = this.state;
-    updateShopData(stores, shopStore);
+  updateShopDetail = () => {
+    const { stores, shopStore } = this.state;
+    console.log(shopStore)
+    updateShopDetail(stores, shopStore);
     this.setShopData();
-  };
-
-  addShop = () => {
-    this.modalToggle();
-    const { lat, lng, shopStore } = this.state;
-    addShopData(
-      lat,
-      lng,
-      shopStore.newShopName,
-      shopStore.newShopDetail,
-      shopStore.newShopCategory,
-      shopStore.newShopLink
-    )
-    this.setShopData();
-  };
-
-  modalToggle = () => {
-    const { isAddModal } = this.state;
-    this.setState({ isAddModal: !isAddModal });
   };
 
   getLocation = (e) => {
-
     this.setState({
       lat: e.lat,
       lng: e.lng,
     })
   }
 
-  setModal = () => {
-    this.setState({
-      isAddModal: true
-    })
-    console.log('yes')
-  }
-
   render() {
     const { stores, currentStateStore, lat, lng } = this.state;
-    const { isAddModal } = this.state;
     return (
       <>
         <div>
-          <div style={{ width: 300, position: "absolute", zIndex: 1000, backgroundColor: 'white' }}>
+          <ModalWrap>
             <SideBar />
-          </div>
+          </ModalWrap>
           <div style={{ height: "100vh", width: "100%", position: "relative" }}>
             <GoogleMapReact
               bootstrapURLKeys={{
@@ -123,7 +129,6 @@ class Map extends React.Component {
               defaultCenter={this.props.center}
               defaultZoom={this.props.zoom}
               onClick={(e) => this.getLocation(e)}
-            // onGoogleApiLoaded={({ map, maps }) => this.apiIsLoaded(map, maps)}
             >
               {stores
                 .filter(store => {
@@ -144,8 +149,10 @@ class Map extends React.Component {
                     />
                   );
                 })}
-              {currentStateStore.canRegisterState && <div onClick={this.setModal} lat={lat} lng={lng} style={{ fontSize: 50 }}>●</div>}
-              <AddShopModal isModal={isAddModal} modalToggle={this.modalToggle} addShop={this.addShop} />
+              <Marker lat={lat} lng={lng} disable={!currentStateStore.canRegisterState} style={{ fontSize: 20 }}>
+                <Pin src={PinImg} alt='marker' onClick={this.setModal} />
+              </Marker>
+              <AddShopModal setShopData={this.setShopData} lat={lat} lng={lng} />
             </GoogleMapReact>
           </div>
         </div>

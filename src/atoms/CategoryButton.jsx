@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import StateActionCreator from "../flux/actions/StateActionCreator";
+import StateActionCreators from "../flux/actions/StateActionCreators";
 
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -16,7 +16,7 @@ const CategoryButton = () => {
   };
 
   useEffect(() => {
-    StateActionCreator.changeCurrentCategory(selectedCategory);
+    StateActionCreators.changeCurrentCategory(selectedCategory);
   }, [selectedCategory])
 
   return (

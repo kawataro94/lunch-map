@@ -1,10 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
-
 import Form from "./Form";
 import Link from '@material-ui/core/Link';
-
 import StoreActionCreators from "../flux/actions/StoreActionCreators";
 import Chip from '@material-ui/core/Chip';
 
@@ -49,7 +47,6 @@ export default ({ store, update, isModal, displayModal }) => {
       return "normal"
     }
   }
-
 
   return (
     <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">

@@ -13,6 +13,12 @@ const StateActionCreators = {
       type: actions.CHANGE_CAN_REGISTER_STATE,
       data: !canRegisterState
     });
+  },
+  addNewShop(isActiveAddModal) {
+    flux.dispatch({
+      type: actions.ADD_NEW_SHOP,
+      data: isActiveAddModal
+    });
   }
 };
 

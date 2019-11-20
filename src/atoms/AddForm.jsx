@@ -2,14 +2,16 @@ import React from "react";
 import ShopStore from "../flux/stores/ShopStore";
 import StoreActionCreators from "../flux/actions/StoreActionCreators";
 import { Container } from "flux/utils";
-import TextField from "@material-ui/core/TextField";
+import StateActionCreators from "../flux/actions/StateActionCreators";
 
+import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-
 import Button from "@material-ui/core/Button";
+
+import { addShopData } from "../shopData";
 
 class AddForm extends React.Component {
   constructor(props) {
@@ -20,6 +22,8 @@ class AddForm extends React.Component {
       newShopDetail: "",
       newShopCategory: "",
       newShopLink: "",
+      lat: this.props.lat,
+      lng: this.props.lng
     };
   }
 
@@ -38,8 +42,10 @@ class AddForm extends React.Component {
   }
 
   addShop = async () => {
-    await StoreActionCreators.addShop(this.state.newShopName, this.state.newShopDetail, this.state.newShopCategory, this.state.newShopLink);
-    this.props.addShop();
+    await StoreActionCreators.addShop(this.state);
+    addShopData(this.state)
+    this.props.setShopData()
+    StateActionCreators.addNewShop(false);
   };
 
   render() {
@@ -94,9 +100,7 @@ class AddForm extends React.Component {
           onChange={this.handleChange("newShopLink")}
         />
         <div style={{ marginTop: 20 }}>
-          <Button variant="contained" color="primary" onClick={() => this.addShop()}>
-            登録する
-        </Button>
+          <Button variant="contained" color="primary" onClick={() => this.addShop()}>登録する</Button>
         </div>
       </>
     );

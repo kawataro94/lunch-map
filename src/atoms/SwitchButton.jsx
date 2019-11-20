@@ -1,13 +1,13 @@
 import React from 'react';
 import Switch from '@material-ui/core/Switch';
-import StateActionCreator from "../flux/actions/StateActionCreator";
+import StateActionCreators from "../flux/actions/StateActionCreators";
 
-export default function Switches() {
-  const [canResisterState, setCanResisterState] = React.useState(true);
+export default () => {
+  const [canResisterState, setCanResisterState] = React.useState(false);
 
   const handleChange = e => {
     setCanResisterState(e.target.checked);
-    StateActionCreator.changeCanRegisterState(canResisterState);
+    StateActionCreators.changeCanRegisterState(canResisterState);
   };
 
   return (
