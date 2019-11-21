@@ -1,14 +1,43 @@
 import React from "react";
 import "../LunchMap.css";
 import GoogleMapReact from "google-map-react";
+import styled from "styled-components";
 import { Container } from "flux/utils";
-import { updateShopData, getShopData, addShopData } from "../shopData";
+import { updateShopDetail, getShopData } from "../shopData";
 
 import ShopStore from "../flux/stores/ShopStore";
-import CategoryStore from "../flux/stores/CategoryStore";
+import CurrentStateStore from "../flux/stores/CurrentStateStore";
 import Tooltip from "../atoms/Tooltip";
 import AddShopModal from "../atoms/AddShopModal";
-import CategoryButton from "../atoms/CategoryButton";
+import SideBar from "../components/SideBar";
+
+import PinImg from './marker.png';
+
+
+const ModalWrap = styled.div`
+  width: 270px; 
+  position: absolute; 
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  border-radius: 10px;
+  border: solid 2px #e3e3e3;
+  background-color: white;
+`
+
+const Marker = styled.div`
+  display: ${props => props.disable === true ? 'none' : 'block'};
+  background-color: black;
+  position: relative;
+`
+
+const Pin = styled.img`
+  position: absolute;
+  top: -40px;
+  left: -10px;
+  bottom: 0;
+  right: 0;
+`
 
 class Map extends React.Component {
   static defaultProps = {
@@ -26,6 +55,7 @@ class Map extends React.Component {
       stores: [],
       modalId: "",
       isAddModal: false,
+      selectedPoint: true,
       category: "all",
       lat: 33.585284,
       lng: 130.392775,
@@ -40,42 +70,22 @@ class Map extends React.Component {
     };
   }
 
+  setModal = () => {
+    this.setState({
+      isAddModal: true
+    })
+  }
+
   static getStores() {
-    return [ShopStore, CategoryStore];
+    return [ShopStore, CurrentStateStore];
   }
 
   static calculateState() {
     return {
       shopStore: ShopStore.getState(),
-      categoryStore: CategoryStore.getState()
+      currentStateStore: CurrentStateStore.getState()
     };
   }
-
-  apiIsLoaded = (map, maps) => {
-    if (maps) {
-      maps.event.addDomListener(window, 'mousedown', () => {
-        this.setState({
-          start: new Date().getTime()
-        });
-      });
-
-      maps.event.addDomListener(window, 'mouseup', () => {
-        if (this.state.start) {
-          this.setState({
-            end: new Date().getTime()
-          })
-          const longpress = (this.state.end - this.state.start < 500) ? false : true;
-
-          if (longpress) {
-            this.setState({
-              isAddModal: true
-            })
-
-          }
-        }
-      });
-    }
-  };
 
   setShopData = () => {
     getShopData().then(shopData => {
@@ -89,29 +99,11 @@ class Map extends React.Component {
     this.setShopData();
   }
 
-  update = () => {
-    const { shopStore, stores } = this.state;
-    updateShopData(stores, shopStore);
+  updateShopDetail = () => {
+    const { stores, shopStore } = this.state;
+    console.log(shopStore)
+    updateShopDetail(stores, shopStore);
     this.setShopData();
-  };
-
-  addShop = () => {
-    this.modalToggle();
-    const { lat, lng, shopStore } = this.state;
-    addShopData(
-      lat,
-      lng,
-      shopStore.newShopName,
-      shopStore.newShopDetail,
-      shopStore.newShopCategory,
-      shopStore.newShopLink
-    )
-    this.setShopData();
-  };
-
-  modalToggle = () => {
-    const { isAddModal } = this.state;
-    this.setState({ isAddModal: !isAddModal });
   };
 
   getLocation = (e) => {
@@ -122,70 +114,47 @@ class Map extends React.Component {
   }
 
   render() {
-    const { stores, categoryStore } = this.state;
-    const { isAddModal } = this.state;
+    const { stores, currentStateStore, lat, lng } = this.state;
     return (
       <>
-        <div style={{ height: "100vh", width: "100%", position: "relative" }}>
-          <GoogleMapReact
-            bootstrapURLKeys={{
-              key: "AIzaSyBaBZTLNvI_6C3eDd5d-XRKoX-LedbUnFU"
-            }}
-            defaultCenter={this.props.center}
-            defaultZoom={this.props.zoom}
-            onClick={(e) => this.getLocation(e)}
-            onGoogleApiLoaded={({ map, maps }) => this.apiIsLoaded(map, maps)}
-          >
-            {stores
-              .filter(store => {
-                if (categoryStore.currentCategory === "all") {
-                  return store.category !== categoryStore.currentCategory
-                }
-                return store.category === categoryStore.currentCategory
-              })
-              .map((store, index) => {
-                return (
-                  <Tooltip
-                    lat={store.lat}
-                    lng={store.lng}
-                    store={store}
-                    key={index}
-                    setModalId={this.setModalId}
-                    update={this.update}
-                  />
-                );
-              })}
-            <CategoryButton />
-            {/* <ButtonUL>
-              <div style={{ marginRight: "10px" }}>
-                <Button
-                  variant="contained"
-                  onClick={() => this.displayCategory("中華")}
-                >
-                  中華
-                </Button>
-              </div>
-              <div style={{ marginRight: "10px" }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => this.displayCategory("和食")}
-                >
-                  和食
-                </Button>
-              </div>
-              <div style={{ marginRight: "10px" }}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => this.displayCategory("フレンチ")}
-                >
-                  フレンチ
-                </Button>
-              </div>
-            </ButtonUL> */}
-            <AddShopModal isModal={isAddModal} modalToggle={this.modalToggle} addShop={this.addShop} />
-          </GoogleMapReact>
+        <div>
+          <ModalWrap>
+            <SideBar />
+          </ModalWrap>
+          <div style={{ height: "100vh", width: "100%", position: "relative" }}>
+            <GoogleMapReact
+              bootstrapURLKeys={{
+                key: "AIzaSyBaBZTLNvI_6C3eDd5d-XRKoX-LedbUnFU"
+              }}
+              defaultCenter={this.props.center}
+              defaultZoom={this.props.zoom}
+              onClick={(e) => this.getLocation(e)}
+            >
+              {stores
+                .filter(store => {
+                  if (currentStateStore.currentCategory === "all") {
+                    return store.category !== currentStateStore.currentCategory
+                  }
+                  return store.category === currentStateStore.currentCategory
+                })
+                .map((store, index) => {
+                  return (
+                    <Tooltip
+                      lat={store.lat}
+                      lng={store.lng}
+                      store={store}
+                      key={index}
+                      setModalId={this.setModalId}
+                      update={this.update}
+                    />
+                  );
+                })}
+              <Marker lat={lat} lng={lng} disable={!currentStateStore.canRegisterState} style={{ fontSize: 20 }}>
+                <Pin src={PinImg} alt='marker' onClick={this.setModal} />
+              </Marker>
+              <AddShopModal setShopData={this.setShopData} lat={lat} lng={lng} />
+            </GoogleMapReact>
+          </div>
         </div>
       </>
     );

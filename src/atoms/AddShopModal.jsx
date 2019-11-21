@@ -1,6 +1,11 @@
 import React from "react";
+import styled from "styled-components";
 import Modal from "react-modal";
 import AddForm from "./AddForm";
+
+import { Container } from "flux/utils";
+import StateActionCreators from "../flux/actions/StateActionCreators";
+import CurrentStateStore from "../flux/stores/CurrentStateStore";
 
 const customStyles = {
   content: {
@@ -18,19 +23,55 @@ const customStyles = {
   }
 };
 
-export default ({ isModal, modalToggle, addShop }) => {
-  return (
-    <Modal isOpen={isModal} style={customStyles} contentLabel="Example Modal">
-      <div style={{ marginBottom: "20px" }}>
-        <i
-          className="material-icons"
-          onClick={() => modalToggle()}
-          style={{ cursor: "pointer", float: "right" }}
-        >
-          clear
-        </i>
-      </div>
-      <AddForm addShop={addShop} />
-    </Modal>
-  );
+const IconWrap = styled.div`
+  marginBottom: 20px; 
+`
+const Icon = styled.i`
+  cursor: pointer;
+  float: right;
+`
+
+class AddShopModal extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      canAddShop: false
+    };
+  }
+
+  static getStores() {
+    return [CurrentStateStore];
+  }
+
+  static calculateState() {
+    return {
+      currentStateStore: CurrentStateStore.getState()
+    };
+  }
+
+  modalToggle = () => {
+    StateActionCreators.addNewShop(false);
+  };
+
+  render() {
+    const { currentStateStore } = this.state
+    const { setShopData, lat, lng } = this.props
+    return (
+      <Modal isOpen={currentStateStore.isActiveAddModal} style={customStyles}>
+        <IconWrap style={{ marginBottom: "20px" }}>
+          <Icon
+            className="material-icons"
+            onClick={() => this.modalToggle()}
+          >
+            clear
+          </Icon>
+        </IconWrap>
+        <AddForm setShopData={setShopData} lat={lat} lng={lng} />
+      </Modal>
+    );
+  }
 };
+
+export default Container.create(AddShopModal);

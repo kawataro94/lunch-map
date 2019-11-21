@@ -5,14 +5,20 @@ import { actions } from "../Constants";
 class ShopStore extends ReduceStore {
   getInitialState() {
     return {
-      category: ''
+      currentCategory: 'all',
+      canRegisterState: false,
+      isActiveAddModal: false
     };
   }
 
   reduce(state, action) {
     switch (action.type) {
       case actions.CHANGE_CURRENT_CATEGORY:
-        return { currentCategory: action.data };
+        return { ...state, currentCategory: action.data };
+      case actions.CHANGE_CAN_REGISTER_STATE:
+        return { ...state, canRegisterState: action.data };
+      case actions.ADD_NEW_SHOP:
+        return { ...state, isActiveAddModal: action.data };
       default:
         return state;
     }
