@@ -2,6 +2,7 @@ import React from "react";
 import "../LunchMap.css";
 import GoogleMapReact from "google-map-react";
 import styled from "styled-components";
+
 import { Container } from "flux/utils";
 import { updateShopDetail, getShopData } from "../shopData";
 
@@ -10,11 +11,13 @@ import CurrentStateStore from "../flux/stores/CurrentStateStore";
 import Tooltip from "../atoms/Tooltip";
 import AddShopModal from "../atoms/AddShopModal";
 import SideBar from "../components/SideBar";
+import Header from "../components/Header";
 
 import PinImg from './marker.png';
 
 
 const ModalWrap = styled.div`
+  display: ${props => props.disable ? 'none' : 'block'};
   width: 270px; 
   position: absolute; 
   top: 10px;
@@ -26,7 +29,7 @@ const ModalWrap = styled.div`
 `
 
 const Marker = styled.div`
-  display: ${props => props.disable === true ? 'none' : 'block'};
+  display: ${props => props.disable ? 'none' : 'block'};
   background-color: black;
   position: relative;
 `
@@ -37,6 +40,10 @@ const Pin = styled.img`
   left: -10px;
   bottom: 0;
   right: 0;
+`
+
+const Main = styled.div`
+  position: relative;
 `
 
 class Map extends React.Component {
@@ -59,8 +66,7 @@ class Map extends React.Component {
       category: "all",
       lat: 33.585284,
       lng: 130.392775,
-      start: null,
-      end: null
+      user: false
     };
 
     this.setModalId = id => {
@@ -101,7 +107,6 @@ class Map extends React.Component {
 
   updateShopDetail = () => {
     const { stores, shopStore } = this.state;
-    console.log(shopStore)
     updateShopDetail(stores, shopStore);
     this.setShopData();
   };
@@ -117,11 +122,12 @@ class Map extends React.Component {
     const { stores, currentStateStore, lat, lng } = this.state;
     return (
       <>
-        <div>
-          <ModalWrap>
+        <Header loginState={currentStateStore.loginState} />
+        <Main>
+          <ModalWrap disable={!currentStateStore.loginState}>
             <SideBar />
           </ModalWrap>
-          <div style={{ height: "100vh", width: "100%", position: "relative" }}>
+          <div style={{ height: "calc(100vh - 64px)", width: "100%", position: "relative" }}>
             <GoogleMapReact
               bootstrapURLKeys={{
                 key: "AIzaSyBaBZTLNvI_6C3eDd5d-XRKoX-LedbUnFU"
@@ -130,7 +136,7 @@ class Map extends React.Component {
               defaultZoom={this.props.zoom}
               onClick={(e) => this.getLocation(e)}
             >
-              {stores
+              {!currentStateStore.canRegisterState && stores
                 .filter(store => {
                   if (currentStateStore.currentCategory === "all") {
                     return store.category !== currentStateStore.currentCategory
@@ -155,7 +161,7 @@ class Map extends React.Component {
               <AddShopModal setShopData={this.setShopData} lat={lat} lng={lng} />
             </GoogleMapReact>
           </div>
-        </div>
+        </Main>
       </>
     );
   }
