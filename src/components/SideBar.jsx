@@ -13,6 +13,7 @@ import StateActionCreators from "../flux/actions/StateActionCreators";
 import CurrentStateStore from "../flux/stores/CurrentStateStore";
 
 const Title = styled.h3`
+  display: ${props => props.disable === true ? 'none' : 'block'};
   margin: 0;
   padding: 0 0 0 10px;
 `
@@ -53,7 +54,9 @@ class SideBar extends React.Component {
       <div>
         <List aria-label="main mailbox folders" style={{ color: 'gray' }}>
           <ListItem style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Title>Lunch Map</Title><SwitchButton />
+            <Title disable={currentStateStore.canRegisterState}>お店表示モード</Title>
+            <Title disable={!currentStateStore.canRegisterState}>お店登録モード</Title>
+            <SwitchButton />
           </ListItem>
         </List>
         <Divider />

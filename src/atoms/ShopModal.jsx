@@ -44,7 +44,7 @@ export default ({ store, update, isModal, displayModal }) => {
     } else if (store.category === "和食") {
       return "primary"
     } else if (store.category === "中華") {
-      return "normal"
+      return "default"
     }
   }
 

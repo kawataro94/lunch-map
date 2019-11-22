@@ -2,6 +2,12 @@ import flux from "../dispatchers/AppDispatchers";
 import { actions } from "../Constants";
 
 const StateActionCreators = {
+  changeLoginState(loginState) {
+    flux.dispatch({
+      type: actions.CHANGE_LOGIN_STATE,
+      data: loginState
+    });
+  },
   changeCurrentCategory(currentCategory) {
     flux.dispatch({
       type: actions.CHANGE_CURRENT_CATEGORY,
