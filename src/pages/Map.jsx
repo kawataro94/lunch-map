@@ -4,7 +4,7 @@ import GoogleMapReact from "google-map-react";
 import styled from "styled-components";
 
 import { Container } from "flux/utils";
-import { updateShopDetail, getShopData } from "../shopData";
+import { getShopData } from "../shopData";
 
 import ShopStore from "../flux/stores/ShopStore";
 import CurrentStateStore from "../flux/stores/CurrentStateStore";
@@ -105,12 +105,6 @@ class Map extends React.Component {
     this.setShopData();
   }
 
-  updateShopDetail = () => {
-    const { stores, shopStore } = this.state;
-    updateShopDetail(stores, shopStore);
-    this.setShopData();
-  };
-
   getLocation = (e) => {
     this.setState({
       lat: e.lat,
@@ -124,7 +118,7 @@ class Map extends React.Component {
       <>
         <Header loginState={currentStateStore.loginState} />
         <Main>
-          <ModalWrap disable={!currentStateStore.loginState}>
+          <ModalWrap disable={currentStateStore.loginState}>
             <SideBar />
           </ModalWrap>
           <div style={{ height: "calc(100vh - 64px)", width: "100%", position: "relative" }}>
@@ -151,7 +145,7 @@ class Map extends React.Component {
                       store={store}
                       key={index}
                       setModalId={this.setModalId}
-                      update={this.update}
+                      setShopData={this.setShopData}
                     />
                   );
                 })}

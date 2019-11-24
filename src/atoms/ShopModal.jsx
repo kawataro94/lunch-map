@@ -5,6 +5,9 @@ import Form from "./Form";
 import Link from '@material-ui/core/Link';
 import StoreActionCreators from "../flux/actions/StoreActionCreators";
 import Chip from '@material-ui/core/Chip';
+import Button from "@material-ui/core/Button";
+
+import { deleteShopData } from "../shopData";
 
 const customStyles = {
   content: {
@@ -22,21 +25,26 @@ const customStyles = {
   }
 };
 
-export default ({ store, update, isModal, displayModal }) => {
+const ModalShopName = styled.h1`
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-weight: bold;
+  color: #000;
+`;
+
+const FlexWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+export default ({ store, setShopData, isModal, displayModal }) => {
   const modalToggle = () => {
     displayModal(!isModal);
     if (isModal) {
       StoreActionCreators.resetShopId();
     }
   };
-
-  const ModalShopName = styled.h1`
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    font-weight: bold;
-    color: #000;
-  `;
 
   const tagColor = () => {
     if (store.category === "フレンチ") {
@@ -46,6 +54,12 @@ export default ({ store, update, isModal, displayModal }) => {
     } else if (store.category === "中華") {
       return "default"
     }
+  }
+
+  const clickDeleteButton = id => {
+    modalToggle();
+    deleteShopData(id);
+    setShopData();
   }
 
   return (
@@ -61,8 +75,11 @@ export default ({ store, update, isModal, displayModal }) => {
       </div>
       <ModalShopName>{store.shopName}</ModalShopName>
       <Chip size="small" label={store.category} color={tagColor()} />
-      <Form update={update} shopDetail={store.shopDetail} id={store.id} />
-      <Link href={store.shopLink}>Link</Link>
+      <Form setShopData={setShopData} store={store} shopDetail={store.shopDetail} id={store.id} />
+      <FlexWrap>
+        <Link href={store.shopLink}>Link</Link>
+        <Button variant="contained" onClick={() => clickDeleteButton(store.id)}>消去する</Button>
+      </FlexWrap>
     </Modal>
   );
 };
