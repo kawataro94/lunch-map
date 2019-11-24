@@ -1,30 +1,27 @@
 import React from "react";
-import ShopStore from "../flux/stores/ShopStore";
+import shopStore from "../flux/stores/ShopStore";
 import StoreActionCreators from "../flux/actions/StoreActionCreators";
 import { Container } from "flux/utils";
 import TextField from '@material-ui/core/TextField';
 
+import { updateShopDetail } from "../shopData";
+
 class Form extends React.Component {
   static getStores() {
-    return [ShopStore];
+    return [shopStore];
   }
 
   static calculateState() {
     return {
-      data: ShopStore.getState()
-    };
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      stores: []
+      shopStore: shopStore.getState()
     };
   }
 
   handleChange = async e => {
     await StoreActionCreators.changeDetail(e.target.value);
-    this.props.update();
+    const updatedData = this.state.shopStore;
+    const { store } = this.props;
+    updateShopDetail(store, updatedData);
   };
 
   componentDidMount() {
@@ -33,7 +30,11 @@ class Form extends React.Component {
   }
 
   render() {
-    const { shopDetail } = this.state.data;
+    console.log(this.state.shopStore)
+    const { shopDetail } = this.props.store;
+    console.log(this.state.shopStore.shopDetail, 'state')
+    console.log(this.props.store, 'props')
+    console.log(shopDetail)
     return (
       <>
         <form>

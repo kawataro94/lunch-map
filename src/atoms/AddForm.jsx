@@ -41,8 +41,8 @@ class AddForm extends React.Component {
     this.setState({ [name]: e.target.value });
   }
 
-  addShop = async () => {
-    await StoreActionCreators.addShop(this.state);
+  addShop = () => {
+    StoreActionCreators.addShop(this.state);
     addShopData(this.state)
     this.props.setShopData()
     StateActionCreators.addNewShop(false);

@@ -9,14 +9,13 @@ firebase.initializeApp({
 });
 const db = firebase.firestore();
 
-export const updateShopDetail = (stores, updatedData) => {
+export const updateShopDetail = (store, updatedData) => {
 
-  const updatedShopData = stores.filter(store => (store.id === updatedData.shopId))[0]
-  updatedShopData.shopDetail = updatedData.shopDetail
+  store.shopDetail = updatedData.shopDetail
 
   db.collection("stores")
-    .doc(updatedData.shopId)
-    .set(updatedShopData)
+    .doc(store.id)
+    .set(store)
     .catch(error => {
       console.error("Error writing document: ", error);
     });
@@ -56,6 +55,16 @@ export const addShopData = (shopData) => {
       category: shopData.newShopCategory,
       shopLink: shopData.newShopLink
     })
+    .catch(error => {
+      console.error("Error writing document: ", error);
+    });
+  getShopData()
+};
+
+export const deleteShopData = (id) => {
+
+  db.collection("stores")
+    .doc(id).delete()
     .catch(error => {
       console.error("Error writing document: ", error);
     });
