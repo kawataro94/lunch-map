@@ -52,14 +52,15 @@ class AddShopModal extends React.Component {
   }
 
   modalToggle = () => {
-    StateActionCreators.addNewShop(false);
+    StateActionCreators.openAddShopModal(false);
   };
 
   render() {
     const { currentStateStore } = this.state
-    const { setShopData, lat, lng } = this.props
+    const { setShopData, categories, lat, lng } = this.props
+
     return (
-      <Modal isOpen={currentStateStore.isActiveAddModal} style={customStyles}>
+      <Modal isOpen={currentStateStore.isActiveAddShopModal} style={customStyles}>
         <IconWrap style={{ marginBottom: "20px" }}>
           <Icon
             className="material-icons"
@@ -68,7 +69,7 @@ class AddShopModal extends React.Component {
             clear
           </Icon>
         </IconWrap>
-        <AddForm setShopData={setShopData} lat={lat} lng={lng} />
+        <AddForm setShopData={setShopData} categories={categories} lat={lat} lng={lng} />
       </Modal>
     );
   }

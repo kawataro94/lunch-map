@@ -7,7 +7,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 
-const CategoryButton = () => {
+
+const CategoryButton = ({ categories }) => {
 
   const [selectedCategory, setSelectedCategory] = useState('all');
 
@@ -29,13 +30,16 @@ const CategoryButton = () => {
           style={{ width: 200 }}
           value={selectedCategory}
         >
-          <MenuItem value="all">all</MenuItem>
-          <MenuItem value="フレンチ">フレンチ</MenuItem>
-          <MenuItem value="中華">中華</MenuItem>
-          <MenuItem value="和食">和食</MenuItem>
+          {
+            categories.map((category, idx) => {
+              return (
+                <MenuItem value={category} key={idx}>{category}</MenuItem>
+              )
+            })
+          }
         </Select>
-      </FormControl></div>
-
+      </FormControl>
+    </div>
   )
 }
 

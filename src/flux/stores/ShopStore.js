@@ -27,14 +27,6 @@ class ShopStore extends ReduceStore {
           shopDetail: [],
           shopId: []
         };
-      case actions.POST_NEWSHOP:
-        return {
-          newShopName: action.data.name,
-          newShopDetail: action.data.detail,
-          shopDetail: action.data.detail,
-          newShopCategory: action.data.category,
-          newShopLink: action.data.link,
-        };
       default:
         return state;
     }
