@@ -40,6 +40,10 @@ class AddForm extends React.Component {
   }
 
   addShop = () => {
+<<<<<<< HEAD
+=======
+    StoreActionCreators.addShop(this.state);
+>>>>>>> b77d7c8daf9a5c2d46e177d73099852531742e27
     addShopData(this.state)
     this.props.setShopData()
     StateActionCreators.openAddShopModal(false);

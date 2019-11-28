@@ -5,7 +5,10 @@ import styled from "styled-components";
 
 import { Container } from "flux/utils";
 import { getShopData } from "../shopData";
+<<<<<<< HEAD
 import { getCategoryData } from "../categoryData";
+=======
+>>>>>>> b77d7c8daf9a5c2d46e177d73099852531742e27
 
 import ShopStore from "../flux/stores/ShopStore";
 import CurrentStateStore from "../flux/stores/CurrentStateStore";
@@ -113,11 +116,14 @@ class Map extends React.Component {
     })
   }
 
+<<<<<<< HEAD
   componentDidMount() {
     this.setShopData();
     this.setCategoriesData();
   }
 
+=======
+>>>>>>> b77d7c8daf9a5c2d46e177d73099852531742e27
   getLocation = (e) => {
     this.setState({
       lat: e.lat,
@@ -133,7 +139,11 @@ class Map extends React.Component {
         <Header loginState={currentStateStore.loginState} />
         <Main>
           <ModalWrap disable={currentStateStore.loginState}>
+<<<<<<< HEAD
             <SideBar categories={categories} />
+=======
+            <SideBar />
+>>>>>>> b77d7c8daf9a5c2d46e177d73099852531742e27
           </ModalWrap>
           <div style={{ height: "calc(100vh - 64px)", width: "100%", position: "relative" }}>
             <GoogleMapReact

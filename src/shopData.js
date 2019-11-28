@@ -59,3 +59,13 @@ export const deleteShopData = (id) => {
       console.error("Error writing document: ", error);
     });
 };
+
+export const deleteShopData = (id) => {
+
+  db.collection("stores")
+    .doc(id).delete()
+    .catch(error => {
+      console.error("Error writing document: ", error);
+    });
+  getShopData()
+};
