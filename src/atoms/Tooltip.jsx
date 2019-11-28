@@ -55,7 +55,7 @@ const ShopName = styled.div`
 
 Modal.setAppElement("#root");
 
-export default ({ store, setModalId, update, lat, lng }) => {
+export default ({ store, setModalId, setShopData, lat, lng }) => {
   const [isModal, displayModal] = useState(false);
 
   const modalToggle = () => {
@@ -77,7 +77,7 @@ export default ({ store, setModalId, update, lat, lng }) => {
       </Tip>
       <ShopModal
         store={store}
-        update={update}
+        setShopData={setShopData}
         isModal={isModal}
         displayModal={displayModal}
       />
