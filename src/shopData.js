@@ -1,13 +1,4 @@
-import * as firebase from "firebase";
-import "firebase/auth";
-import "firebase/firestore";
-
-firebase.initializeApp({
-  apiKey: "AIzaSyDGaGnMkdC7ldX2dGNiz6K_j4uLMl0WNIQ",
-  authDomain: "lunch-map-1555836368736.firebaseapp.com",
-  projectId: "lunch-map-1555836368736"
-});
-const db = firebase.firestore();
+import { db } from "./resource"
 
 export const updateShopDetail = (store, updatedData) => {
 
@@ -58,7 +49,6 @@ export const addShopData = (shopData) => {
     .catch(error => {
       console.error("Error writing document: ", error);
     });
-  getShopData()
 };
 
 export const deleteShopData = (id) => {
@@ -68,5 +58,4 @@ export const deleteShopData = (id) => {
     .catch(error => {
       console.error("Error writing document: ", error);
     });
-  getShopData()
 };

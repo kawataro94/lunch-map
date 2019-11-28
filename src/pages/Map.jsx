@@ -5,10 +5,12 @@ import styled from "styled-components";
 
 import { Container } from "flux/utils";
 import { getShopData } from "../shopData";
+import { getCategoryData } from "../categoryData";
 
 import ShopStore from "../flux/stores/ShopStore";
 import CurrentStateStore from "../flux/stores/CurrentStateStore";
 import Tooltip from "../atoms/Tooltip";
+import AddCategoryModal from "../atoms/AddCategoryModal";
 import AddShopModal from "../atoms/AddShopModal";
 import SideBar from "../components/SideBar";
 import Header from "../components/Header";
@@ -60,10 +62,10 @@ class Map extends React.Component {
 
     this.state = {
       stores: [],
+      categories: [],
       modalId: "",
       isAddModal: false,
       selectedPoint: true,
-      category: "all",
       lat: 33.585284,
       lng: 130.392775,
       user: false
@@ -101,8 +103,19 @@ class Map extends React.Component {
     });
   };
 
+  setCategoriesData = () => {
+    const categoryList = []
+    getCategoryData().then(categories => {
+      categories.map(category => categoryList.push(category.name));
+      this.setState({
+        categories: categoryList
+      });
+    })
+  }
+
   componentDidMount() {
     this.setShopData();
+    this.setCategoriesData();
   }
 
   getLocation = (e) => {
@@ -113,13 +126,14 @@ class Map extends React.Component {
   }
 
   render() {
-    const { stores, currentStateStore, lat, lng } = this.state;
+    const { stores, currentStateStore, lat, lng, categories } = this.state;
+
     return (
       <>
         <Header loginState={currentStateStore.loginState} />
         <Main>
           <ModalWrap disable={currentStateStore.loginState}>
-            <SideBar />
+            <SideBar categories={categories} />
           </ModalWrap>
           <div style={{ height: "calc(100vh - 64px)", width: "100%", position: "relative" }}>
             <GoogleMapReact
@@ -152,7 +166,8 @@ class Map extends React.Component {
               <Marker lat={lat} lng={lng} disable={!currentStateStore.canRegisterState} style={{ fontSize: 20 }}>
                 <Pin src={PinImg} alt='marker' onClick={this.setModal} />
               </Marker>
-              <AddShopModal setShopData={this.setShopData} lat={lat} lng={lng} />
+              <AddCategoryModal setCategoriesData={this.setCategoriesData} />
+              <AddShopModal setShopData={this.setShopData} categories={categories} lat={lat} lng={lng} />
             </GoogleMapReact>
           </div>
         </Main>

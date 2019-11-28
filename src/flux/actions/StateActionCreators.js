@@ -20,10 +20,16 @@ const StateActionCreators = {
       data: !canRegisterState
     });
   },
-  addNewShop(isActiveAddModal) {
+  openAddShopModal(isActiveAddShopModal) {
     flux.dispatch({
-      type: actions.ADD_NEW_SHOP,
-      data: isActiveAddModal
+      type: actions.OPEN_ADD_SHOP_MODAL,
+      data: isActiveAddShopModal
+    });
+  },
+  openAddCategoryModal(isActiveAddCategoryModal) {
+    flux.dispatch({
+      type: actions.OPEN_ADD_CATEGORY_MODAL,
+      data: isActiveAddCategoryModal
     });
   }
 };

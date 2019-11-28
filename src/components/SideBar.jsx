@@ -20,7 +20,7 @@ const Title = styled.h3`
 
 const Wrap = styled.div`
   display: ${props => props.disable === true ? 'none' : 'block'};
-  height: 90px;
+  // height: 90px;
 `
 
 class SideBar extends React.Component {
@@ -44,12 +44,18 @@ class SideBar extends React.Component {
     };
   }
 
-  AddNewShop = () => {
-    StateActionCreators.addNewShop(true);
+  openAddCategoryModal = () => {
+    StateActionCreators.openAddCategoryModal(true);
+  }
+
+  openAddShopModal = () => {
+    StateActionCreators.openAddShopModal(true);
   }
 
   render() {
     const { currentStateStore } = this.state;
+    const { categories } = this.props
+
     return (
       <div>
         <List aria-label="main mailbox folders" style={{ color: 'gray' }}>
@@ -62,12 +68,15 @@ class SideBar extends React.Component {
         <Divider />
         <List component="nav" aria-label="main mailbox folders" style={{ paddingLeft: 10 }}>
           <Wrap disable={currentStateStore.canRegisterState} >
-            <CategoryButton />
+            <CategoryButton categories={categories} />
+            <Button variant="contained" color="primary" style={{ margin: '25px 0px 25px 20px', width: '205px' }} onClick={() => this.openAddCategoryModal()}>
+              カテゴリを追加する
+            </Button>
           </Wrap>
           <Wrap disable={!currentStateStore.canRegisterState}>
-            <Button variant="contained" color="primary" style={{ margin: '25px 0px 0px 75px' }} onClick={() => this.AddNewShop()}>
+            <Button variant="contained" color="primary" style={{ margin: '25px 0px 25px 20px', width: '205px' }} onClick={() => this.openAddShopModal()}>
               登録する
-          </Button>
+            </Button>
           </Wrap>
         </List>
       </div>
