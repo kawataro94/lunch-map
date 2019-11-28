@@ -8,7 +8,8 @@ class ShopStore extends ReduceStore {
       loginState: false,
       currentCategory: 'all',
       canRegisterState: false,
-      isActiveAddModal: false
+      isActiveAddShopModal: false,
+      isActiveAddCategoryModal: false,
     };
   }
 
@@ -20,8 +21,10 @@ class ShopStore extends ReduceStore {
         return { ...state, currentCategory: action.data };
       case actions.CHANGE_CAN_REGISTER_STATE:
         return { ...state, canRegisterState: action.data };
-      case actions.ADD_NEW_SHOP:
-        return { ...state, isActiveAddModal: action.data };
+      case actions.OPEN_ADD_SHOP_MODAL:
+        return { ...state, isActiveAddShopModal: action.data };
+      case actions.OPEN_ADD_CATEGORY_MODAL:
+        return { ...state, isActiveAddCategoryModal: action.data };
       default:
         return state;
     }

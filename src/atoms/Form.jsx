@@ -30,11 +30,7 @@ class Form extends React.Component {
   }
 
   render() {
-    console.log(this.state.shopStore)
     const { shopDetail } = this.props.store;
-    console.log(this.state.shopStore.shopDetail, 'state')
-    console.log(this.props.store, 'props')
-    console.log(shopDetail)
     return (
       <>
         <form>

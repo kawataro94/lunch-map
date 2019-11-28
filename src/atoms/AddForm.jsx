@@ -1,9 +1,7 @@
 import React from "react";
 import ShopStore from "../flux/stores/ShopStore";
-import StoreActionCreators from "../flux/actions/StoreActionCreators";
 import { Container } from "flux/utils";
 import StateActionCreators from "../flux/actions/StateActionCreators";
-
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -42,13 +40,14 @@ class AddForm extends React.Component {
   }
 
   addShop = () => {
-    StoreActionCreators.addShop(this.state);
     addShopData(this.state)
     this.props.setShopData()
-    StateActionCreators.addNewShop(false);
+    StateActionCreators.openAddShopModal(false);
   };
 
   render() {
+    const { categories } = this.props
+    const categoriesExceptAll = categories.filter(category => category !== 'all')
 
     return (
       <>
@@ -68,9 +67,13 @@ class AddForm extends React.Component {
               style={{ width: 200 }}
               value={this.state.newShopCategory}
             >
-              <MenuItem value="フレンチ">フレンチ</MenuItem>
-              <MenuItem value="中華">中華</MenuItem>
-              <MenuItem value="和食">和食</MenuItem>
+              {
+                categoriesExceptAll.map((category, idx) => {
+                  return (
+                    <MenuItem value={category} key={idx}>{category}</MenuItem>
+                  )
+                })
+              }
             </Select>
           </FormControl>
         </div>
