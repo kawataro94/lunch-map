@@ -26,7 +26,10 @@ export const getShopData = () => {
           lng: doc.data().lng,
           id: doc.id,
           category: doc.data().category,
-          shopLink: doc.data().shopLink
+          shopLink: doc.data().shopLink,
+          accessToken: doc.data().accessToken,
+          fileName: doc.data().fileName,
+          bucketName: doc.data().bucketName,
         });
       });
       return dataArray;
@@ -44,7 +47,11 @@ export const addShopData = (shopData) => {
       lng: `${shopData.lng}`,
       lat: `${shopData.lat}`,
       category: shopData.newShopCategory,
-      shopLink: shopData.newShopLink
+      shopLink: shopData.newShopLink,
+      fileName: shopData.file.name,
+      fileSize: shopData.file.size,
+      fileMime: shopData.file.type,
+      fileUpdatedDate: shopData.file.lastModifiedDate,
     })
     .catch(error => {
       console.error("Error writing document: ", error);
@@ -59,4 +66,8 @@ export const deleteShopData = (id) => {
       console.error("Error writing document: ", error);
     });
 };
+
+
+
+
 

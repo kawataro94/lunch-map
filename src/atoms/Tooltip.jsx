@@ -10,8 +10,6 @@ const Tip = styled.div`
   top: -48px;
   margin: 0 -60px;
   padding: 7px 10px;
-  min-width: 120px;
-  max-width: 100%;
   color: #555;
   font-size: 16px;
   background: #fff;
@@ -48,6 +46,8 @@ const Tip = styled.div`
 const ShopName = styled.div`
   margin: 0;
   padding: 0;
+  min-width: 120px;
+  max-width: 150px;
   text-align: center;
   font-weight: bold;
   color: #000;

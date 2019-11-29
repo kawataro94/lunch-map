@@ -1,4 +1,6 @@
 import React from "react";
+import styled from 'styled-components';
+
 import ShopStore from "../flux/stores/ShopStore";
 import { Container } from "flux/utils";
 import StateActionCreators from "../flux/actions/StateActionCreators";
@@ -11,6 +13,15 @@ import Button from "@material-ui/core/Button";
 
 import { addShopData } from "../shopData";
 
+import { uploadStoreImage } from '../storage'
+
+const InputFile = styled.input` 
+  opacity:0;  
+  appearance: none;
+  position: absolute;
+  cursor: pointer;
+`
+
 class AddForm extends React.Component {
   constructor(props) {
     super(props);
@@ -21,7 +32,8 @@ class AddForm extends React.Component {
       newShopCategory: "",
       newShopLink: "",
       lat: this.props.lat,
-      lng: this.props.lng
+      lng: this.props.lng,
+      file: ""
     };
   }
 
@@ -43,7 +55,13 @@ class AddForm extends React.Component {
     addShopData(this.state)
     this.props.setShopData()
     StateActionCreators.openAddShopModal(false);
+    uploadStoreImage(this.state.file);
   };
+
+  handleFileSelect = e => {
+    console.log('handleFileSelect', e.target.files[0])
+    this.setState({ file: e.target.files[0] })
+  }
 
   render() {
     const { categories } = this.props
@@ -76,6 +94,17 @@ class AddForm extends React.Component {
               }
             </Select>
           </FormControl>
+          <Button
+            size='large'
+            variant="contained"
+            color="default"
+            style={{ marginTop: '20px', marginLeft: '25px', cursor: 'pointer' }}
+          >Upload
+          <InputFile
+              type="file"
+              className="inputFileBtnHide"
+              onChange={this.handleFileSelect}
+            /></Button>
         </div>
         <form>
           <TextField
