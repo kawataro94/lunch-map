@@ -6,16 +6,15 @@ import styled from "styled-components";
 import { Container } from "flux/utils";
 import { getShopData } from "../shopData";
 import { getCategoryData } from "../categoryData";
-
 import ShopStore from "../flux/stores/ShopStore";
 import CurrentStateStore from "../flux/stores/CurrentStateStore";
+
 import Tooltip from "../atoms/Tooltip";
 import AddCategoryModal from "../atoms/AddCategoryModal";
 import AddShopModal from "../atoms/AddShopModal";
 import SideBar from "../components/SideBar";
-import Header from "../components/Header";
 
-import PinImg from './marker.png';
+import PinImg from '../images/marker.png';
 
 
 const ModalWrap = styled.div`
@@ -130,9 +129,8 @@ class Map extends React.Component {
 
     return (
       <>
-        <Header loginState={currentStateStore.loginState} />
         <Main>
-          <ModalWrap disable={!currentStateStore.loginState}>
+          <ModalWrap disable={currentStateStore.loginState}>
             <SideBar categories={categories} />
           </ModalWrap>
           <div style={{ height: "calc(100vh - 64px)", width: "100%", position: "relative" }}>
