@@ -3,7 +3,6 @@ import { db } from "./resource"
 export const updateShopDetail = (store, updatedData) => {
 
   store.shopDetail = updatedData.shopDetail
-
   db.collection("stores")
     .doc(store.id)
     .set(store)
@@ -27,9 +26,7 @@ export const getShopData = () => {
           id: doc.id,
           category: doc.data().category,
           shopLink: doc.data().shopLink,
-          accessToken: doc.data().accessToken,
           fileName: doc.data().fileName,
-          bucketName: doc.data().bucketName,
         });
       });
       return dataArray;

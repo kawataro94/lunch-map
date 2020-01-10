@@ -74,7 +74,7 @@ class Login extends React.Component {
             <Button variant="contained" onClick={() => this.login(email, password)} style={{ marginTop: 20 }}>Login</Button>
           </Paper>
         </FlexWrap>
-        {login && <Redirect to="/map" />}
+        {login && <Redirect to="/top" />}
       </div>
     );
   }

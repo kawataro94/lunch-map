@@ -123,13 +123,15 @@ class ShopList extends React.Component {
           {stores.map((store, idx) => {
             return (
               <PieceWrap key={idx}>
-                <Piece>
-                  <Sumnail><Image src={store.imageUrl} /></Sumnail>
-                  <TextBox>
-                    <Title>{store.shopName}</Title>
-                    <Description>{store.shopDetail}</Description>
-                  </TextBox>
-                </Piece>
+                <a href={store.shopLink} style={{ color: 'black', textDecoration: 'none' }}>
+                  <Piece>
+                    <Sumnail><Image src={store.imageUrl} /></Sumnail>
+                    <TextBox>
+                      <Title>{store.shopName}</Title>
+                      <Description>{store.shopDetail}</Description>
+                    </TextBox>
+                  </Piece>
+                </a>
               </PieceWrap>
             )
           })}

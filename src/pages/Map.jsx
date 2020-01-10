@@ -21,8 +21,8 @@ const ModalWrap = styled.div`
   display: ${props => props.disable ? 'none' : 'block'};
   width: 270px; 
   position: absolute; 
-  top: 10px;
-  left: 10px;
+  bottom: 20px;
+  right: 10px;
   z-index: 1000;
   border-radius: 10px;
   border: solid 2px #e3e3e3;
@@ -130,10 +130,10 @@ class Map extends React.Component {
     return (
       <>
         <Main>
-          <ModalWrap disable={currentStateStore.loginState}>
+          <ModalWrap disable={!currentStateStore.loginState}>
             <SideBar categories={categories} />
           </ModalWrap>
-          <div style={{ height: "calc(100vh - 64px)", width: "100%", position: "relative" }}>
+          <div style={{ height: "calc(100vh - 70px)", width: "100%", position: "relative" }}>
             <GoogleMapReact
               bootstrapURLKeys={{
                 key: "AIzaSyBaBZTLNvI_6C3eDd5d-XRKoX-LedbUnFU"
