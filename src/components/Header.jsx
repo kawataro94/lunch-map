@@ -23,7 +23,7 @@ export default ({ loginState }) => {
   const StyledLink = LoginLink.withComponent(Link);
 
   return (
-    <div style={{ position: 'fix' }}>
+    <div>
       <AppBar position="static" style={{ backgroundColor: 'white' }}>
         <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h6" style={{ color: 'black', fontWeight: 'bold' }}>LunchMap</Typography>

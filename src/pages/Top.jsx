@@ -13,17 +13,19 @@ const FlexWrap = styled.div`
   color: black;
   display: flex;
   position: relative;
+  padding-top: 6px;
+  height: calc(100vh - 70px);
 `;
 
 const ListWrap = styled.div`
   width: 50%;
   padding: 20px;
   box-sizing: border-box;
+  overflow:auto;
 `;
 
 const MapWrap = styled.div`
   width: 50%;
-  position: fixed;
   right: 0;
 `;
 
