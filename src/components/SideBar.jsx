@@ -75,7 +75,7 @@ class SideBar extends React.Component {
           </Wrap>
           <Wrap disable={!currentStateStore.canRegisterState}>
             <Button variant="contained" color="primary" style={{ margin: '25px 0px 25px 20px', width: '205px' }} onClick={() => this.openAddShopModal()}>
-              登録する
+              位置を登録する
             </Button>
           </Wrap>
         </List>

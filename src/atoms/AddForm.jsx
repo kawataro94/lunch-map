@@ -132,7 +132,7 @@ class AddForm extends React.Component {
           onChange={this.handleChange("newShopLink")}
         />
         <div style={{ marginTop: 20 }}>
-          <Button variant="contained" color="primary" onClick={() => this.addShop()}>登録する</Button>
+          <Button variant="contained" color="primary" onClick={() => this.addShop()}>お店を登録する</Button>
         </div>
       </>
     );

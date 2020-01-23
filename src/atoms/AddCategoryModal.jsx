@@ -86,7 +86,7 @@ class AddCategoryModal extends React.Component {
           onChange={this.handleChange("newCategory")}
         />
         <div style={{ marginTop: 20 }}>
-          <Button variant="contained" color="primary" onClick={() => this.addCategory()}>登録する</Button>
+          <Button variant="contained" color="primary" onClick={() => this.addCategory()}>カテゴリを登録する</Button>
         </div>
       </Modal>
     );
